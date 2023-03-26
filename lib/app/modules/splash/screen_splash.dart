@@ -16,7 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     Timer(
-      const Duration(milliseconds: 5500),
+      const Duration(milliseconds: 3500),
       () {
         Get.offAllNamed('/dashboard');
       },
@@ -53,11 +53,10 @@ class _SplashScreenState extends State<SplashScreen> {
                   progressStrokeWidth: 6,
                   backStrokeWidth: 6,
                   backColor: Colors.blueAccent.shade100.withOpacity(0.3),
-                  animationDuration: 5,
+                  animationDuration: 3,
                   progressColors: [
                     Colors.white,
                     Colors.blueAccent.shade100,
-                    Colors.blueAccent
                   ],
                   size: 60,
                 ),
