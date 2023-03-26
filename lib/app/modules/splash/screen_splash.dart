@@ -16,9 +16,9 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     Timer(
-      const Duration(milliseconds: 3500),
+      const Duration(milliseconds: 3600),
       () {
-        Get.offAllNamed('/dashboard');
+        Get.offAllNamed('/login');
       },
     );
     super.initState();

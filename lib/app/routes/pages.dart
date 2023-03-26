@@ -11,7 +11,7 @@ abstract class AppPages {
       page: () => SplashScreen(),
     ),
     GetPage(
-      name: Routes.DASHBOARD,
+      name: Routes.LOGIN,
       binding: LoginBinding(),
       page: () => LoginPage(),
       transition: Transition.cupertinoDialog,
