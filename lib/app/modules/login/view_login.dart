@@ -59,16 +59,16 @@ class _LoginPageState extends State<LoginPage> {
                       controller: controller.passwordController,
                       obscureText: showPassword,
                       prefixIcon: const Icon(Icons.lock),
-                      suffixIcon: InkWell(
-                        onTap: () {
+                      suffixIcon: IconButton(
+                        onPressed: () {
                           setState(() {
                             showPassword = !showPassword;
                           });
                         },
-                        child: Icon(
+                        icon: Icon(
                           showPassword
-                              ? Icons.visibility_rounded
-                              : Icons.visibility_off_rounded,
+                              ? Icons.visibility
+                              : Icons.visibility_off,
                         ),
                       ),
                       validator: (value) {

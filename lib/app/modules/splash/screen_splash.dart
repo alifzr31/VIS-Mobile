@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,8 +18,8 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     Timer(
       const Duration(milliseconds: 3600),
-      () {
-        Get.offAllNamed('/login');
+      () async {
+        navigate();
       },
     );
     super.initState();
@@ -39,16 +40,20 @@ class _SplashScreenState extends State<SplashScreen> {
                 Text(
                   'PT Anyar Retail Indonesia',
                   style: const TextStyle(
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 3,
-                      fontSize: 20,
-                      color: Colors.white),
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 3,
+                    fontSize: 20,
+                    color: Colors.white,
+                  ),
                 ),
                 const SizedBox(height: 50),
                 SimpleCircularProgressBar(
                   mergeMode: true,
                   onGetText: (double value) {
-                    return Text('${value.toInt()}%');
+                    return Text(
+                      '${value.toInt()}%',
+                      style: const TextStyle(color: Colors.white),
+                    );
                   },
                   progressStrokeWidth: 6,
                   backStrokeWidth: 6,
@@ -89,6 +94,14 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 }
 
-// void navigate() async {
-//   Get.offAllNamed('/dashboard');
-// }
+void navigate() async {
+  SharedPreferences _prefs = await SharedPreferences.getInstance();
+  var access = _prefs.getString('access');
+  var refresh = _prefs.getString('refresh');
+
+  if (access == null && refresh == null) {
+    Get.offAllNamed('/login');
+  } else {
+    Get.offAllNamed('/dashboard');
+  }
+}

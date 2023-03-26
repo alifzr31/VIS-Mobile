@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:vis_mobile/app/modules/dashboard/view_dashboard.dart';
 import 'package:vis_mobile/app/modules/login/binding_login.dart';
 import 'package:vis_mobile/app/modules/login/view_login.dart';
 import 'package:vis_mobile/app/modules/splash/screen_splash.dart';
@@ -15,6 +16,11 @@ abstract class AppPages {
       binding: LoginBinding(),
       page: () => LoginPage(),
       transition: Transition.cupertinoDialog,
+    ),
+    GetPage(
+      name: Routes.DASHBOARD,
+      page: () => DashboardPage(),
+      transition: Transition.circularReveal,
     ),
   ];
 }

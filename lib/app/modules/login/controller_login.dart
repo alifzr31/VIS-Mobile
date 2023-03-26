@@ -28,8 +28,8 @@ class LoginController extends GetxController {
 
       if (response.statusCode == 200) {
         SharedPreferences _prefs = await SharedPreferences.getInstance();
-        await _prefs.setString(body['access'], 'access');
-        await _prefs.setString(body['refresh'], 'refresh');
+        await _prefs.setString('access', body['access']);
+        await _prefs.setString('refresh', body['refresh']);
         Get.snackbar(
           'Success',
           'Login Success',
@@ -37,6 +37,7 @@ class LoginController extends GetxController {
           colorText: Colors.white,
           icon: const Icon(Icons.check, color: Colors.white),
         );
+        Get.offAndToNamed('/dashboard');
       } else {
         Get.snackbar(
           'Login Failed',
