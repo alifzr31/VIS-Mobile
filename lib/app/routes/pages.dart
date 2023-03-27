@@ -15,7 +15,7 @@ abstract class AppPages {
       name: Routes.LOGIN,
       binding: LoginBinding(),
       page: () => LoginPage(),
-      transition: Transition.cupertinoDialog,
+      transition: Transition.fadeIn,
     ),
     GetPage(
       name: Routes.DASHBOARD,

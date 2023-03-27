@@ -17,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     Timer(
-      const Duration(milliseconds: 3600),
+      const Duration(milliseconds: 4600),
       () async {
         navigate();
       },
@@ -27,69 +27,81 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: blueColor,
-      body: Center(
-        child: Stack(
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+    return Stack(
+      children: [
+        Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/bg-login.png'),
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+        Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Center(
+            child: Stack(
               children: [
-                Image.asset('assets/splash.png'),
-                const SizedBox(height: 20),
-                Text(
-                  'PT Anyar Retail Indonesia',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 3,
-                    fontSize: 20,
-                    color: Colors.white,
-                  ),
-                ),
-                const SizedBox(height: 50),
-                SimpleCircularProgressBar(
-                  mergeMode: true,
-                  onGetText: (double value) {
-                    return Text(
-                      '${value.toInt()}%',
-                      style: const TextStyle(color: Colors.white),
-                    );
-                  },
-                  progressStrokeWidth: 6,
-                  backStrokeWidth: 6,
-                  backColor: Colors.blueAccent.shade100.withOpacity(0.3),
-                  animationDuration: 3,
-                  progressColors: [
-                    Colors.white,
-                    Colors.blueAccent.shade100,
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset('assets/splash_.png'),
+                    const SizedBox(height: 20),
+                    Text(
+                      'PT Anyar Retail Indonesia',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 3,
+                        fontSize: 20,
+                        color: Colors.black,
+                      ),
+                    ),
+                    const SizedBox(height: 50),
+                    SimpleCircularProgressBar(
+                      mergeMode: true,
+                      onGetText: (double value) {
+                        return Text(
+                          '${value.toInt()}%',
+                          style: const TextStyle(color: Colors.black),
+                        );
+                      },
+                      progressStrokeWidth: 6,
+                      backStrokeWidth: 6,
+                      backColor: Colors.grey.withOpacity(0.3),
+                      animationDuration: 4,
+                      progressColors: [
+                        Colors.grey,
+                        Colors.grey.shade800,
+                      ],
+                      size: 60,
+                    ),
                   ],
-                  size: 60,
+                ),
+                Positioned(
+                  bottom: 0,
+                  left: 30,
+                  right: 30,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: Column(
+                      children: const [
+                        Text(
+                          'Powered By',
+                          style: TextStyle(fontSize: 16, color: Colors.black),
+                        ),
+                        Text(
+                          'DEV-IT AnyarGroup | 2022',
+                          style: TextStyle(fontSize: 16, color: Colors.black),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),
-            Positioned(
-              bottom: 0,
-              left: 30,
-              right: 30,
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: Column(
-                  children: const [
-                    Text(
-                      'Powered By',
-                      style: TextStyle(fontSize: 16, color: Colors.white),
-                    ),
-                    Text(
-                      'DEV-IT AnyarGroup | 2022',
-                      style: TextStyle(fontSize: 16, color: Colors.white),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }

@@ -29,39 +29,47 @@ class BaseTextInput extends StatelessWidget {
       validator: validator,
       decoration: InputDecoration(
         labelText: labelText,
-        labelStyle: const TextStyle(color: Colors.white),
+        labelStyle: const TextStyle(color: Colors.black),
         suffixIcon: suffixIcon,
-        suffixIconColor: Colors.white,
+        suffixIconColor: Colors.black,
         prefixIcon: prefixIcon,
-        prefixIconColor: Colors.white,
+        prefixIconColor: Colors.black,
         contentPadding: const EdgeInsets.all(18),
-        fillColor: Colors.blueGrey.withOpacity(0.5),
+        fillColor: Colors.grey.withOpacity(0.5),
         filled: true,
-        border: OutlineInputBorder(
+        focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
           borderSide: const BorderSide(
-            color: Colors.grey,
+            width: 1,
+            color: Colors.black,
           ),
         ),
-        errorStyle: const TextStyle(
-          color: Colors.amber,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30),
+          borderSide: const BorderSide(
+            width: 1,
+            color: Colors.black,
+          ),
+        ),
+        errorStyle: TextStyle(
+          color: Colors.red.shade800,
           fontSize: 14,
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
-          borderSide: const BorderSide(
-            color: Colors.amber,
+          borderSide: BorderSide(
+            color: Colors.red.shade800,
           ),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
-          borderSide: const BorderSide(
-            color: Colors.amber,
+          borderSide: BorderSide(
+            color: Colors.red.shade800,
           ),
         ),
       ),
       style: const TextStyle(
-        color: Colors.white,
+        color: Colors.black,
         fontSize: 18,
       ),
     );

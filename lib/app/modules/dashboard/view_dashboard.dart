@@ -1,6 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:vis_mobile/app/core/value/colors.dart';
+import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vis_mobile/app/modules/dashboard/widgets/home_tab.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -19,10 +20,10 @@ class _DashboardPageState extends State<DashboardPage> {
     return Scaffold(
       bottomNavigationBar: CurvedNavigationBar(
         key: bottomNavKey,
-        color: blueColor,
+        color: Colors.black,
         backgroundColor: Colors.transparent,
-        buttonBackgroundColor: Colors.blueAccent.shade100,
-        height: 50,
+        buttonBackgroundColor: Colors.grey,
+        height: 55,
         items: [
           NavItem(icon: Icons.home),
           NavItem(icon: Icons.list),
@@ -42,8 +43,15 @@ class _DashboardPageState extends State<DashboardPage> {
           const Center(
             child: Text('List Tab'),
           ),
-          const Center(
-            child: Text('Account Tab'),
+          Center(
+            child: ElevatedButton(
+              onPressed: () async {
+                SharedPreferences _prefs = await SharedPreferences.getInstance();
+                _prefs.clear();
+                Get.offAllNamed('/login');
+              },
+              child: Text('Log Out'),
+            ),
           ),
         ],
       ),

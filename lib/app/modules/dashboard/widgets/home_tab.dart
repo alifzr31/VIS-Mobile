@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
-import 'package:vis_mobile/app/core/value/colors.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
@@ -53,7 +50,7 @@ class HeaderBody extends StatelessWidget {
             child: Text(
               'Dashboard',
               style: TextStyle(
-                fontSize: 20,
+                fontSize: 26,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -99,6 +96,7 @@ class HeaderBody extends StatelessWidget {
                       ),
                     ],
                   ),
+                  const SizedBox(height: 10),
                   Row(
                     children: [
                       const Icon(
@@ -129,6 +127,7 @@ class HeaderBody extends StatelessWidget {
                   ),
                 ],
               ),
+              SizedBox(width: Get.width * 0.10),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -150,7 +149,7 @@ class HeaderBody extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            '@gmail.com',
+                            'alifzakya.r@gmail.com',
                             style: const TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w600,
@@ -160,6 +159,7 @@ class HeaderBody extends StatelessWidget {
                       ),
                     ],
                   ),
+                  const SizedBox(height: 10),
                   Row(
                     children: [
                       const Icon(
@@ -216,6 +216,9 @@ class ContentBody extends StatelessWidget {
             children: [
               CardBody(
                 icon: FontAwesome.file,
+                onTap: () {
+                  print('PO');
+                },
               ),
               Text(
                 'Purchase Order',
@@ -234,6 +237,9 @@ class ContentBody extends StatelessWidget {
               SizedBox(height: 10),
               CardBody(
                 icon: FontAwesome.box,
+                onTap: () {
+                  print('GRR');
+                },
               ),
               Text(
                 'Goods Return Request',
@@ -252,6 +258,9 @@ class ContentBody extends StatelessWidget {
               SizedBox(height: 10),
               CardBody(
                 icon: FontAwesome.folder,
+                onTap: () {
+                  print('AP Invoice');
+                },
               ),
               Text(
                 'AP Invoice',
@@ -273,6 +282,9 @@ class ContentBody extends StatelessWidget {
             children: [
               CardBody(
                 icon: FontAwesome.file,
+                onTap: () {
+                  print('GRPO');
+                },
               ),
               Text(
                 'Goods Receipt PO',
@@ -291,6 +303,9 @@ class ContentBody extends StatelessWidget {
               SizedBox(height: 10),
               CardBody(
                 icon: FontAwesome.box_archive,
+                onTap: () {
+                  print('GR');
+                },
               ),
               Text(
                 'Goods Return',
@@ -309,6 +324,9 @@ class ContentBody extends StatelessWidget {
               SizedBox(height: 10),
               CardBody(
                 icon: FontAwesome.folder_open,
+                onTap: () {
+                  print('AP Credit Memo');
+                },
               ),
               Text(
                 'AP Credit Memo',
@@ -336,24 +354,29 @@ class CardBody extends StatelessWidget {
   const CardBody({
     Key? key,
     required this.icon,
+    this.onTap,
   }) : super(key: key);
 
   final IconData icon;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
     return Card(
       elevation: 3,
-      color: blueColor,
+      color: Colors.black,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20.0),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(30.0),
-        child: Icon(
-          icon,
-          size: 80,
-          color: Colors.white,
+      child: InkWell(
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.all(30.0),
+          child: Icon(
+            icon,
+            size: 80,
+            color: Colors.white,
+          ),
         ),
       ),
     );

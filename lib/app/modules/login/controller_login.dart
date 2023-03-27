@@ -51,10 +51,10 @@ class LoginController extends GetxController {
           ),
         );
       }
-    } on IOException {
+    } catch (e) {
       Get.snackbar(
         'Failed',
-        'Maybe your connection is lost',
+        e.toString(),
         backgroundColor: Colors.amber.withOpacity(0.8),
         colorText: blueColor,
         icon: const Icon(Icons.mobiledata_off, color: blueColor),
