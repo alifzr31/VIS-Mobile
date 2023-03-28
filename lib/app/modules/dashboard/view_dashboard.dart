@@ -1,6 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:vis_mobile/app/modules/dashboard/widgets/home_tab.dart';
+import 'package:vis_mobile/app/modules/dashboard/widgets/masterdata_tab.dart';
 import 'package:vis_mobile/app/modules/dashboard/widgets/profile_tab.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -44,9 +45,7 @@ class _DashboardPageState extends State<DashboardPage> {
         index: _page,
         children: [
           const HomeTab(),
-          const Center(
-            child: Text('List Tab'),
-          ),
+          const MasterDataTab(),
           const ProfileTab(),
         ],
       ),

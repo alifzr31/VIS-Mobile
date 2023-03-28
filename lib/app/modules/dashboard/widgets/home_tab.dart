@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:intl/intl.dart';
 import 'package:vis_mobile/app/modules/dashboard/controllers/user_controller.dart';
+import 'package:vis_mobile/app/widgets/base_refresh.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
@@ -21,7 +23,7 @@ class _HomeTabState extends State<HomeTab> {
           children: [
             HeaderBody(),
             const SizedBox(height: 10),
-            const Expanded(
+            Expanded(
               child: ContentBody(),
             ),
           ],
@@ -82,15 +84,17 @@ class HeaderBody extends StatelessWidget {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Text(
-                                    'Admin',
+                                  Text(
+                                    controller.dash.value!.namaVendor
+                                        .toString(),
                                     style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
                                   Text(
-                                    'VL0000036',
+                                    controller.dash.value!.kodeVendor
+                                        .toString(),
                                     style: const TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w600,
@@ -210,149 +214,204 @@ class HeaderBody extends StatelessWidget {
   }
 }
 
-class ContentBody extends StatelessWidget {
-  const ContentBody({super.key});
+class ContentBody extends StatefulWidget {
+  ContentBody({super.key});
+
+  @override
+  State<ContentBody> createState() => _ContentBodyState();
+}
+
+class _ContentBodyState extends State<ContentBody> {
+  final controller = Get.find<UserController>();
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            children: [
-              CardBody(
-                icon: FontAwesome.file,
-                onTap: () {
-                  print('PO');
-                },
+    var po = int.parse(controller.totalPO.toString());
+    var grpo = int.parse(controller.totalGRPO.toString());
+    var gr = int.parse(controller.totalGR.toString());
+    var grr = int.parse(controller.totalGRR.toString());
+    var apmem = int.parse(controller.totalAPMEM.toString());
+    var apinv = int.parse(controller.totalAPINV.toString());
+
+    String total_po = NumberFormat.currency(
+      locale: 'id_ID',
+      symbol: 'Rp ',
+    ).format(po);
+
+    String total_grpo = NumberFormat.currency(
+      locale: 'id_ID',
+      symbol: 'Rp ',
+    ).format(grpo);
+
+    String total_gr = NumberFormat.currency(
+      locale: 'id_ID',
+      symbol: 'Rp ',
+    ).format(gr);
+
+    String total_grr = NumberFormat.currency(
+      locale: 'id_ID',
+      symbol: 'Rp ',
+    ).format(grr);
+
+    String total_apmem = NumberFormat.currency(
+      locale: 'id_ID',
+      symbol: 'Rp ',
+    ).format(apmem);
+
+    String total_apinv = NumberFormat.currency(
+      locale: 'id_ID',
+      symbol: 'Rp ',
+    ).format(apinv);
+
+    return Obx(
+      () => controller.isLoading.value
+          ? const Center(child: CupertinoActivityIndicator())
+          : BaseRefresh(
+            onRefresh: () async {
+              setState(() {
+                controller.fetchProfile();
+              });
+            },
+            child: SingleChildScrollView(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    children: [
+                      CardBody(
+                        icon: FontAwesome.file,
+                        onTap: () {
+                          print('PO');
+                        },
+                      ),
+                      const Text(
+                        'Purchase Order',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Text(
+                        total_po,
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      CardBody(
+                        icon: FontAwesome.box,
+                        onTap: () {
+                          print('GRR');
+                        },
+                      ),
+                      const Text(
+                        'Goods Return Request',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Text(
+                        total_grr,
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      CardBody(
+                        icon: FontAwesome.folder,
+                        onTap: () {
+                          print('AP Invoice');
+                        },
+                      ),
+                      const Text(
+                        'AP Invoice',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Text(
+                        total_apinv,
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      CardBody(
+                        icon: FontAwesome.file,
+                        onTap: () {
+                          print('GRPO');
+                        },
+                      ),
+                      const Text(
+                        'Goods Receipt PO',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Text(
+                        total_grpo,
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      CardBody(
+                        icon: FontAwesome.box_archive,
+                        onTap: () {
+                          print('GR');
+                        },
+                      ),
+                      const Text(
+                        'Goods Return',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Text(
+                        total_gr,
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      CardBody(
+                        icon: FontAwesome.folder_open,
+                        onTap: () {
+                          print('AP Credit Memo');
+                        },
+                      ),
+                      const Text(
+                        'AP Credit Memo',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Text(
+                        total_apmem,
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-              Text(
-                'Purchase Order',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              Text(
-                'Rp 999.999.999',
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              SizedBox(height: 10),
-              CardBody(
-                icon: FontAwesome.box,
-                onTap: () {
-                  print('GRR');
-                },
-              ),
-              Text(
-                'Goods Return Request',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              Text(
-                'Rp 999.999.999',
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              SizedBox(height: 10),
-              CardBody(
-                icon: FontAwesome.folder,
-                onTap: () {
-                  print('AP Invoice');
-                },
-              ),
-              Text(
-                'AP Invoice',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              Text(
-                'Rp 999.999.999',
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ],
+            ),
           ),
-          Column(
-            children: [
-              CardBody(
-                icon: FontAwesome.file,
-                onTap: () {
-                  print('GRPO');
-                },
-              ),
-              Text(
-                'Goods Receipt PO',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              Text(
-                'Rp 999.999.999',
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              SizedBox(height: 10),
-              CardBody(
-                icon: FontAwesome.box_archive,
-                onTap: () {
-                  print('GR');
-                },
-              ),
-              Text(
-                'Goods Return',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              Text(
-                'Rp 999.999.999',
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              SizedBox(height: 10),
-              CardBody(
-                icon: FontAwesome.folder_open,
-                onTap: () {
-                  print('AP Credit Memo');
-                },
-              ),
-              Text(
-                'AP Credit Memo',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              Text(
-                'Rp 999.999.999',
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
     );
   }
 }

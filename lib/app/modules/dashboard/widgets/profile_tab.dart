@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vis_mobile/app/modules/dashboard/controllers/user_controller.dart';
 import 'package:intl/intl.dart';
 import 'package:vis_mobile/app/widgets/base_button.dart';
+import 'package:vis_mobile/app/widgets/base_refresh.dart';
 
 class ProfileTab extends StatefulWidget {
   const ProfileTab({super.key});
@@ -21,11 +22,8 @@ class _ProfileTabState extends State<ProfileTab> {
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Center(
-          child: RefreshIndicator(
-            backgroundColor: Colors.black,
-            color: Colors.white,
+          child: BaseRefresh(
             onRefresh: () async {
-              await Future.delayed(const Duration(seconds: 3));
               setState(() {
                 controller.fetchProfile();
               });

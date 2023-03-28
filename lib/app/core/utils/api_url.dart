@@ -10,4 +10,8 @@ class EndPoint {
 
   // USER
   static final String profile = '/profile';
+  static final String dash = '/dash';
+
+  // FETCHING DATA
+  static final String masterdata = '/master-data';
 }
