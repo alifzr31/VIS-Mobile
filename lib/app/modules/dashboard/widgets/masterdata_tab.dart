@@ -28,7 +28,7 @@ class _MasterDataTabState extends State<MasterDataTab> {
                   style: TextStyle(fontSize: 26),
                 ),
                 Text(
-                  'Total '+controller.masterdata.length.toString()+' Stock',
+                  'Total ' + controller.masterdata.length.toString() + ' Stock',
                   style: const TextStyle(fontSize: 18),
                 ),
               ],
@@ -99,9 +99,18 @@ class CardData extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Vendor Code : ' + masterdata.code!),
-              Text('Item Name : ' + masterdata.name!),
-              Text('Stock : ' + masterdata.stock.toString())
+              Text(
+                'Vendor Code : ' + masterdata.code!,
+                style: const TextStyle(color: Colors.black),
+              ),
+              Text(
+                'Item Name : ' + masterdata.name!,
+                style: const TextStyle(color: Colors.black),
+              ),
+              Text(
+                'Stock : ' + masterdata.stock.toString(),
+                style: const TextStyle(color: Colors.black),
+              )
             ],
           ),
         ),
