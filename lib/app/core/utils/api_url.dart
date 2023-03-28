@@ -7,4 +7,7 @@ class ApiUrl {
 class EndPoint {
   // AUTHENTICATION
   static final String login = '/token';
+
+  // USER
+  static final String profile = '/profile';
 }

@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:vis_mobile/app/modules/dashboard/binding_dashboard.dart';
 import 'package:vis_mobile/app/modules/dashboard/view_dashboard.dart';
 import 'package:vis_mobile/app/modules/login/binding_login.dart';
 import 'package:vis_mobile/app/modules/login/view_login.dart';
@@ -10,6 +11,7 @@ abstract class AppPages {
     GetPage(
       name: Routes.SPLASH,
       page: () => SplashScreen(),
+      transition: Transition.native,
     ),
     GetPage(
       name: Routes.LOGIN,
@@ -19,6 +21,7 @@ abstract class AppPages {
     ),
     GetPage(
       name: Routes.DASHBOARD,
+      binding: DashboardBinding(),
       page: () => DashboardPage(),
       transition: Transition.circularReveal,
     ),

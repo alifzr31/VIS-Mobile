@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:vis_mobile/app/core/value/colors.dart';
 
 class BaseButton extends StatelessWidget {
   const BaseButton({
@@ -17,13 +16,10 @@ class BaseButton extends StatelessWidget {
       onPressed: onPressed,
       child: Text(
         buttonText,
-        style: const TextStyle(
-          color: blueColor,
-          fontSize: 15,
-        ),
+        style: const TextStyle(fontSize: 15),
       ),
       style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.grey,
         shape: StadiumBorder(),
         elevation: 3,
       ),

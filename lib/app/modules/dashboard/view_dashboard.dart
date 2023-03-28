@@ -1,8 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vis_mobile/app/modules/dashboard/widgets/home_tab.dart';
+import 'package:vis_mobile/app/modules/dashboard/widgets/profile_tab.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -18,6 +17,11 @@ class _DashboardPageState extends State<DashboardPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        toolbarHeight: 0,
+        backgroundColor: Colors.transparent,
+      ),
       bottomNavigationBar: CurvedNavigationBar(
         key: bottomNavKey,
         color: Colors.black,
@@ -43,16 +47,7 @@ class _DashboardPageState extends State<DashboardPage> {
           const Center(
             child: Text('List Tab'),
           ),
-          Center(
-            child: ElevatedButton(
-              onPressed: () async {
-                SharedPreferences _prefs = await SharedPreferences.getInstance();
-                _prefs.clear();
-                Get.offAllNamed('/login');
-              },
-              child: Text('Log Out'),
-            ),
-          ),
+          const ProfileTab(),
         ],
       ),
     );
