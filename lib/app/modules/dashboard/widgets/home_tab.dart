@@ -273,6 +273,7 @@ class _ContentBodyState extends State<ContentBody> {
               });
             },
             child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
