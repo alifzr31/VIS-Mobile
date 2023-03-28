@@ -87,7 +87,7 @@ class CardData extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 3,
-      color: Colors.grey.shade600,
+      color: Colors.grey.shade400,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20.0),
       ),
