@@ -14,4 +14,5 @@ class EndPoint {
 
   // FETCHING DATA
   static final String masterdata = '/master-data';
+  static final String masterdatadetail = '/master-data-detail';
 }

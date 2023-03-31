@@ -10,24 +10,24 @@ String dashToJson(Dash data) => json.encode(data.toJson());
 
 class Dash {
     Dash({
-        required this.totalPo,
-        required this.totalGrpo,
-        required this.totalGr,
-        required this.totalGrr,
-        required this.totalApMem,
-        required this.totalApInv,
-        required this.kodeVendor,
-        required this.namaVendor,
+        this.totalPo,
+        this.totalGrpo,
+        this.totalGr,
+        this.totalGrr,
+        this.totalApMem,
+        this.totalApInv,
+        this.kodeVendor,
+        this.namaVendor,
     });
 
-    int totalPo;
-    int totalGrpo;
-    int totalGr;
-    int totalGrr;
-    int totalApMem;
-    int totalApInv;
-    String kodeVendor;
-    String namaVendor;
+    int? totalPo;
+    int? totalGrpo;
+    int? totalGr;
+    int? totalGrr;
+    int? totalApMem;
+    int? totalApInv;
+    String? kodeVendor;
+    String? namaVendor;
 
     factory Dash.fromJson(Map<String, dynamic> json) => Dash(
         totalPo: json["total_po"],

@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:vis_mobile/app/modules/dashboard/binding_dashboard.dart';
 import 'package:vis_mobile/app/modules/dashboard/view_dashboard.dart';
+import 'package:vis_mobile/app/modules/details/master_data/binding_master_data_detail.dart';
+import 'package:vis_mobile/app/modules/details/master_data/view_master_data_detail.dart';
 import 'package:vis_mobile/app/modules/login/binding_login.dart';
 import 'package:vis_mobile/app/modules/login/view_login.dart';
 import 'package:vis_mobile/app/modules/splash/screen_splash.dart';
@@ -24,6 +26,12 @@ abstract class AppPages {
       binding: DashboardBinding(),
       page: () => DashboardPage(),
       transition: Transition.circularReveal,
+    ),
+    GetPage(
+      name: Routes.MASTERDATADETAIL,
+      binding: MasterDataDetailBinding(),
+      page: () => MasterDataDetailPage(),
+      transition: Transition.topLevel,
     ),
   ];
 }

@@ -21,49 +21,45 @@ class _ProfileTabState extends State<ProfileTab> {
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.all(20),
-        child: Center(
-          child: BaseRefresh(
-            onRefresh: () async {
-              setState(() {
-                controller.fetchProfile();
-              });
-            },
-            child: SingleChildScrollView(
-              physics: const AlwaysScrollableScrollPhysics(),
-              scrollDirection: Axis.vertical,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    'Profile Vendor',
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                    ),
+        child: BaseRefresh(
+          onRefresh: () async {
+            await Future.delayed(const Duration(seconds: 3));
+            setState(() {
+              controller.fetchProfile();
+            });
+          },
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const Text(
+                  'Profile Vendor',
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
                   ),
-                  const SizedBox(height: 20),
-                  CircleAvatar(
-                    backgroundColor: Colors.grey.shade300,
-                    radius: 80,
-                    child: const Icon(FontAwesome.user_large, size: 70),
+                ),
+                const SizedBox(height: 20),
+                CircleAvatar(
+                  backgroundColor: Colors.grey.shade300,
+                  radius: 90,
+                  child: const Icon(FontAwesome.user_large, size: 80),
+                ),
+                SizedBox(height: Get.height * 0.05),
+                SizedBox(width: Get.width, child: bodyItem()),
+                SizedBox(height: Get.height * 0.05),
+                SizedBox(
+                  width: Get.width,
+                  child: BaseButton(
+                    buttonText: 'Log Out',
+                    onPressed: () async {
+                      SharedPreferences _prefs =
+                          await SharedPreferences.getInstance();
+                      await _prefs.clear();
+                      Get.offAllNamed('/login');
+                    },
                   ),
-                  SizedBox(height: Get.height * 0.05),
-                  bodyItem(),
-                  SizedBox(height: Get.height * 0.05),
-                  SizedBox(
-                    width: Get.width,
-                    child: BaseButton(
-                      buttonText: 'Log Out',
-                      onPressed: () async {
-                        SharedPreferences _prefs =
-                            await SharedPreferences.getInstance();
-                        await _prefs.clear();
-                        Get.offAllNamed('/login');
-                      },
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
@@ -96,117 +92,96 @@ class _ProfileTabState extends State<ProfileTab> {
     return Obx(
       () => controller.isLoading.value
           ? const Center(child: CupertinoActivityIndicator())
-          : Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Email',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    Text(
-                      controller.profile.value!.email.toString(),
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    const SizedBox(height: 10),
-                    const Text(
-                      'Address',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    Text(
-                      controller.profile.value!.address.toString(),
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                    const SizedBox(height: 10),
-                    const Text(
-                      'Tax ID',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    Text(
-                      controller.profile.value!.federalTaxId.toString(),
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                    const SizedBox(height: 10),
-                    const Text(
-                      'Telephone',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    Text(
-                      controller.profile.value!.telephone.toString(),
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                    const SizedBox(height: 10),
-                    const Text(
-                      'Telephone 2',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    Text(
-                      controller.profile.value!.telephone2.toString(),
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                    const SizedBox(height: 10),
-                    const Text(
-                      'Mobile Phone',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    Text(
-                      controller.profile.value!.mobilePhone.toString(),
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                  ],
+                const Text(
+                  'Email',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                 ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    const Text(
-                      'Payment Term',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    Text(
-                      controller.profile.value!.paymentTerm.toString(),
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    const SizedBox(height: 10),
-                    const Text(
-                      'Bank Account',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    Text(
-                      controller.profile.value!.bankAccount.toString(),
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                    const SizedBox(height: 10),
-                    const Text(
-                      'Account Balance',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    Text(
-                      account_balance,
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                    const SizedBox(height: 10),
-                    const Text(
-                      'Purchase Order',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    Text(
-                      purchase_order,
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                    const SizedBox(height: 10),
-                    const Text(
-                      'Goods Receipt PO',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    Text(
-                      goods_receipt_po,
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                    const SizedBox(height: 40),
-                  ],
+                Text(
+                  controller.profile.value!.email.toString(),
+                ),
+                const SizedBox(height: 10),
+                const Text(
+                  'Address',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                ),
+                Text(
+                  controller.profile.value!.address.toString(),
+                ),
+                const SizedBox(height: 10),
+                const Text(
+                  'Tax ID',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                ),
+                Text(
+                  controller.profile.value!.federalTaxId.toString(),
+                ),
+                const SizedBox(height: 10),
+                const Text(
+                  'Telephone',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                ),
+                Text(
+                  controller.profile.value!.telephone.toString(),
+                ),
+                const SizedBox(height: 10),
+                const Text(
+                  'Telephone 2',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                ),
+                Text(
+                  controller.profile.value!.telephone2.toString(),
+                ),
+                const SizedBox(height: 10),
+                const Text(
+                  'Mobile Phone',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                ),
+                Text(
+                  controller.profile.value!.mobilePhone.toString(),
+                ),
+                const SizedBox(height: 10),
+                const Text(
+                  'Payment Term',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                ),
+                Text(
+                  controller.profile.value!.paymentTerm.toString(),
+                ),
+                const SizedBox(height: 10),
+                const Text(
+                  'Bank Account',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                ),
+                Text(
+                  controller.profile.value!.bankAccount.toString(),
+                ),
+                const SizedBox(height: 10),
+                const Text(
+                  'Account Balance',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                ),
+                Text(
+                  account_balance,
+                ),
+                const SizedBox(height: 10),
+                const Text(
+                  'Purchase Order',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                ),
+                Text(
+                  purchase_order,
+                ),
+                const SizedBox(height: 10),
+                const Text(
+                  'Goods Receipt PO',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                ),
+                Text(
+                  goods_receipt_po,
                 ),
               ],
             ),
