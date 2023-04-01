@@ -14,10 +14,12 @@ class MasterDataController extends GetxController {
 
   var isLoading = true.obs;
   final masterdata = <MasterData>[].obs;
+  var stok = 0.obs;
 
   @override
   void onInit() {
     fetchMasterData();
+    stok;
     super.onInit();
   }
 
@@ -25,6 +27,9 @@ class MasterDataController extends GetxController {
     try {
       final response = await masterProvider.fetchMasterData();
       final body = jsonDecode(response.body);
+
+      stok.value = body['total_row'];
+      print(stok.value);
 
       masterdata.value = body['data'] == null
           ? []

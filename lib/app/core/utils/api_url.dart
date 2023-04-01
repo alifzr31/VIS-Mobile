@@ -10,9 +10,17 @@ class EndPoint {
 
   // USER
   static final String profile = '/profile';
-  static final String dash = '/dash';
 
   // FETCHING DATA
+  // HOME TAB
+  static final String dash = '/dash';
+  static final String po = '/po';
+
+  // LIST TAB
   static final String masterdata = '/master-data';
   static final String masterdatadetail = '/master-data-detail';
+
+  // DETAIL PO
+  static final String detailpo = '/po-detail';
+  static final String detailout = '/po-detail-os';
 }

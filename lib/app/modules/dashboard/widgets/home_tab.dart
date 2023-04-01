@@ -226,43 +226,6 @@ class _ContentBodyState extends State<ContentBody> {
 
   @override
   Widget build(BuildContext context) {
-    var po = int.parse(controller.totalPO.toString());
-    var grpo = int.parse(controller.totalGRPO.toString());
-    var gr = int.parse(controller.totalGR.toString());
-    var grr = int.parse(controller.totalGRR.toString());
-    var apmem = int.parse(controller.totalAPMEM.toString());
-    var apinv = int.parse(controller.totalAPINV.toString());
-
-    String total_po = NumberFormat.currency(
-      locale: 'id_ID',
-      symbol: 'Rp ',
-    ).format(po);
-
-    String total_grpo = NumberFormat.currency(
-      locale: 'id_ID',
-      symbol: 'Rp ',
-    ).format(grpo);
-
-    String total_gr = NumberFormat.currency(
-      locale: 'id_ID',
-      symbol: 'Rp ',
-    ).format(gr);
-
-    String total_grr = NumberFormat.currency(
-      locale: 'id_ID',
-      symbol: 'Rp ',
-    ).format(grr);
-
-    String total_apmem = NumberFormat.currency(
-      locale: 'id_ID',
-      symbol: 'Rp ',
-    ).format(apmem);
-
-    String total_apinv = NumberFormat.currency(
-      locale: 'id_ID',
-      symbol: 'Rp ',
-    ).format(apinv);
-
     return Obx(
       () => controller.isLoading.value
           ? const Center(child: CupertinoActivityIndicator())
@@ -284,7 +247,7 @@ class _ContentBodyState extends State<ContentBody> {
                         CardBody(
                           icon: FontAwesome.file,
                           onTap: () {
-                            print('PO');
+                            Get.toNamed('/po');
                           },
                         ),
                         const Text(
@@ -294,7 +257,7 @@ class _ContentBodyState extends State<ContentBody> {
                           ),
                         ),
                         Text(
-                          total_po,
+                          controller.total_po.value,
                           style: const TextStyle(
                             fontWeight: FontWeight.w600,
                           ),
@@ -313,7 +276,7 @@ class _ContentBodyState extends State<ContentBody> {
                           ),
                         ),
                         Text(
-                          total_grr,
+                          controller.total_grr.value,
                           style: const TextStyle(
                             fontWeight: FontWeight.w600,
                           ),
@@ -332,7 +295,7 @@ class _ContentBodyState extends State<ContentBody> {
                           ),
                         ),
                         Text(
-                          total_apinv,
+                          controller.total_ap_inv.value,
                           style: const TextStyle(
                             fontWeight: FontWeight.w600,
                           ),
@@ -354,7 +317,7 @@ class _ContentBodyState extends State<ContentBody> {
                           ),
                         ),
                         Text(
-                          total_grpo,
+                          controller.total_grpo.value,
                           style: const TextStyle(
                             fontWeight: FontWeight.w600,
                           ),
@@ -373,7 +336,7 @@ class _ContentBodyState extends State<ContentBody> {
                           ),
                         ),
                         Text(
-                          total_gr,
+                          controller.total_gr.value,
                           style: const TextStyle(
                             fontWeight: FontWeight.w600,
                           ),
@@ -392,7 +355,7 @@ class _ContentBodyState extends State<ContentBody> {
                           ),
                         ),
                         Text(
-                          total_apmem,
+                          controller.total_ap_mem.value,
                           style: const TextStyle(
                             fontWeight: FontWeight.w600,
                           ),

@@ -5,6 +5,11 @@ import 'package:vis_mobile/app/modules/details/master_data/binding_master_data_d
 import 'package:vis_mobile/app/modules/details/master_data/view_master_data_detail.dart';
 import 'package:vis_mobile/app/modules/login/binding_login.dart';
 import 'package:vis_mobile/app/modules/login/view_login.dart';
+import 'package:vis_mobile/app/modules/purchase_order/binding_po.dart';
+import 'package:vis_mobile/app/modules/purchase_order/details/binding_detail_po.dart';
+import 'package:vis_mobile/app/modules/purchase_order/details/view_detail_out.dart';
+import 'package:vis_mobile/app/modules/purchase_order/details/view_detail_po.dart';
+import 'package:vis_mobile/app/modules/purchase_order/view_po.dart';
 import 'package:vis_mobile/app/modules/splash/screen_splash.dart';
 import 'package:vis_mobile/app/routes/routes.dart';
 
@@ -32,6 +37,24 @@ abstract class AppPages {
       binding: MasterDataDetailBinding(),
       page: () => MasterDataDetailPage(),
       transition: Transition.topLevel,
+    ),
+    GetPage(
+      name: Routes.PO,
+      binding: PurchaseOrderBinding(),
+      page: () => PurchaseOrderPage(),
+      transition: Transition.size,
+    ),
+    GetPage(
+      name: Routes.DETAILPO,
+      binding: DetailPOBinding(),
+      page: () => DetailPOPage(),
+      transition: Transition.fadeIn,
+    ),
+    GetPage(
+      name: Routes.DETAILOUT,
+      binding: DetailPOBinding(),
+      page: () => DetailOutPage(),
+      transition: Transition.fadeIn,
     ),
   ];
 }

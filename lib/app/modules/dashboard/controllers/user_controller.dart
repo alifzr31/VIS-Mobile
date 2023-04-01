@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:vis_mobile/app/core/value/colors.dart';
 import 'package:vis_mobile/app/data/models/dash.dart';
 import 'package:vis_mobile/app/data/models/user.dart';
@@ -15,17 +16,20 @@ class UserController extends GetxController {
 
   var isLoading = true.obs;
   final profile = Rx<User?>(null);
-  var po = 0.obs;
-  var ab = 0.obs;
-  var grpo = 0.obs;
+  var _po = 0.obs;
+  var _ab = 0.obs;
+  var _grpo = 0.obs;
+  final po = ''.obs;
+  final ab = ''.obs;
+  final grpo = ''.obs;
 
   final dash = Rx<Dash?>(null);
-  var totalPO = 0.obs;
-  var totalGRPO = 0.obs;
-  var totalGR = 0.obs;
-  var totalGRR = 0.obs;
-  var totalAPMEM = 0.obs;
-  var totalAPINV = 0.obs;
+  final total_po = ''.obs;
+  final total_grpo = ''.obs;
+  final total_gr = ''.obs;
+  final total_grr = ''.obs;
+  final total_ap_mem = ''.obs;
+  final total_ap_inv = ''.obs;
 
   @override
   void onInit() {
@@ -43,20 +47,64 @@ class UserController extends GetxController {
 
       if (response.statusCode == 200) {
         profile.value = userFromJson(jsonEncode(body['data']));
-        var _po = int.parse(body['data']['purchase_order']);
-        var _ab = int.parse(body['data']['account_balance']);
-        var _grpo = int.parse(body['data']['goods_receipt_po']);
-        po.value = _po;
-        ab.value = _ab;
-        grpo.value = _grpo;
-        
+        _po.value = int.parse(body['data']['purchase_order'].toString());
+        _ab.value = int.parse(body['data']['account_balance'].toString());
+        _grpo.value = int.parse(body['data']['goods_receipt_po'].toString());
+
+        po.value = NumberFormat.currency(
+          locale: 'id_ID',
+          symbol: 'Rp ',
+        ).format(_po.value);
+
+        ab.value = NumberFormat.currency(
+          locale: 'id_ID',
+          symbol: 'Rp ',
+        ).format(_ab.value);
+
+        grpo.value = NumberFormat.currency(
+          locale: 'id_ID',
+          symbol: 'Rp ',
+        ).format(_grpo.value);
+
         dash.value = dashFromJson(jsonEncode(bdy));
-        totalAPINV.value = bdy['total_ap_inv'];
-        totalAPMEM.value = bdy['total_ap_mem'];
-        totalGR.value = bdy['total_gr'];
-        totalGRPO.value = bdy['total_grpo'];
-        totalGRR.value = bdy['total_grr'];
-        totalPO.value = bdy['total_po'];
+        var tPo = bdy['total_po'];
+        var tGrpo = bdy['total_grpo'];
+        var tGr = bdy['total_gr'];
+        var tGrr = bdy['total_grr'];
+        var tApm = bdy['total_ap_mem'];
+        var tApi = bdy['total_ap_inv'];
+        // var tGrpo = int.parse(bdy['total'].toString())
+
+        total_po.value = NumberFormat.currency(
+          locale: 'id_ID',
+          symbol: 'Rp ',
+        ).format(tPo);
+
+        total_grpo.value = NumberFormat.currency(
+          locale: 'id_ID',
+          symbol: 'Rp ',
+        ).format(tGrpo);
+
+        total_gr.value = NumberFormat.currency(
+          locale: 'id_ID',
+          symbol: 'Rp ',
+        ).format(tGr);
+
+        total_grr.value = NumberFormat.currency(
+          locale: 'id_ID',
+          symbol: 'Rp ',
+        ).format(tGrr);
+
+        total_ap_mem.value = NumberFormat.currency(
+          locale: 'id_ID',
+          symbol: 'Rp ',
+        ).format(tApm);
+
+        total_ap_inv.value = NumberFormat.currency(
+          locale: 'id_ID',
+          symbol: 'Rp ',
+        ).format(tApi);
+
         update();
       } else {
         Get.snackbar(

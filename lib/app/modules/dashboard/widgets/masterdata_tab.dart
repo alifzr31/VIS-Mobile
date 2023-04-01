@@ -41,7 +41,7 @@ class HeaderContent extends StatelessWidget {
         ),
         Center(
           child: Text(
-            'Total ' + controller.masterdata.length.toString() + ' Stock',
+            'Total ' + controller.stok.value.toString() + ' Stock',
             style: const TextStyle(fontSize: 18),
           ),
         ),
