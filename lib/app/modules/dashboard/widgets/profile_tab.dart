@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -51,10 +52,18 @@ class _ProfileTabState extends State<ProfileTab> {
                   child: BaseButton(
                     buttonText: 'Log Out',
                     onPressed: () async {
+                      await EasyLoading.show(
+                        status: 'Loading',
+                        maskType: EasyLoadingMaskType.black,
+                        dismissOnTap: false,
+                      );
+
                       SharedPreferences _prefs =
                           await SharedPreferences.getInstance();
                       await _prefs.clear();
                       Get.offAllNamed('/login');
+
+                      await EasyLoading.dismiss();
                     },
                   ),
                 ),

@@ -115,6 +115,7 @@ class _LoginPageState extends State<LoginPage> {
                                   await EasyLoading.show(
                                     status: 'Loading',
                                     maskType: EasyLoadingMaskType.black,
+                                    dismissOnTap: false,
                                   );
                                   controller.login();
                                   await EasyLoading.dismiss();
