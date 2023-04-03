@@ -5,12 +5,10 @@ class BaseCard extends StatelessWidget {
     Key? key,
     this.onTap,
     this.child,
-    this.splashColor,
   }) : super(key: key);
 
   final void Function()? onTap;
   final Widget? child;
-  final Color? splashColor;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +20,7 @@ class BaseCard extends StatelessWidget {
       ),
       child: InkWell(
         onTap: onTap,
-        splashColor: splashColor,
+        splashColor: Colors.black.withOpacity(0.3),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
           child: child,
