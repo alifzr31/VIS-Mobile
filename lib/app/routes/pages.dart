@@ -9,6 +9,8 @@ import 'package:vis_mobile/app/modules/global/ap-inv/view_apinv.dart';
 import 'package:vis_mobile/app/modules/global/ap-mem/binding_apmem.dart';
 import 'package:vis_mobile/app/modules/global/ap-mem/view_apmem.dart';
 import 'package:vis_mobile/app/modules/global/gr/binding_gr.dart';
+import 'package:vis_mobile/app/modules/global/gr/details/binding_detail_gr.dart';
+import 'package:vis_mobile/app/modules/global/gr/details/view_detail_gr.dart';
 import 'package:vis_mobile/app/modules/global/gr/view_gr.dart';
 import 'package:vis_mobile/app/modules/global/grr/binding_grr.dart';
 import 'package:vis_mobile/app/modules/global/grr/details/binding_detail_grr.dart';
@@ -105,6 +107,12 @@ abstract class AppPages {
       binding: GrBinding(),
       page: () => GrPage(),
       transition: Transition.size,
+    ),
+    GetPage(
+      name: Routes.DETAILGR,
+      binding: DetailGrBinding(),
+      page: () => DetailGrPage(),
+      transition: Transition.fadeIn,
     ),
     GetPage(
       name: Routes.APMEM,

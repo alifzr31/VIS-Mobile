@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:vis_mobile/app/core/value/colors.dart';
 import 'package:vis_mobile/app/data/models/global_model.dart';
 import 'package:vis_mobile/app/modules/global/global_controller.dart';
+import 'package:vis_mobile/app/modules/global/gr/details/controller_detail_gr.dart';
 import 'package:vis_mobile/app/widgets/base_card.dart';
 import 'package:vis_mobile/app/widgets/base_refresh.dart';
 
@@ -123,6 +124,7 @@ class ListGr extends StatelessWidget {
   }) : super(key: key);
 
   final GlobalModel gr;
+  final controller = Get.find<DetailGrController>();
 
   @override
   Widget build(BuildContext context) {
@@ -134,7 +136,10 @@ class ListGr extends StatelessWidget {
     ).format(t_gr);
 
     return BaseCard(
-      onTap: () {},
+      onTap: () {
+        controller.id.value = gr.docnum.toString();
+        Get.toNamed('/detailgr');
+      },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

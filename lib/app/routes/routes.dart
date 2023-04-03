@@ -12,5 +12,6 @@ class Routes {
   static const DETAILAPINV = '/detailapinv';
   static const GRPO = '/grpo';
   static const GR = '/gr';
+  static const DETAILGR = '/detailgr';
   static const APMEM = '/apmem';
 }

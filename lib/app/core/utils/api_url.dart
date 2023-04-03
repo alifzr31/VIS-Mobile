@@ -34,4 +34,7 @@ class EndPoint {
 
   // DETAIL AP-INVOICE
   static final String detailapinv = '/ap-invoice-detail';
+
+  // DETAIL GOODS RETURN
+  static final String detailgr = '/good-return-detail';
 }
