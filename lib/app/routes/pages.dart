@@ -3,12 +3,16 @@ import 'package:vis_mobile/app/modules/dashboard/binding_dashboard.dart';
 import 'package:vis_mobile/app/modules/dashboard/view_dashboard.dart';
 import 'package:vis_mobile/app/modules/details/master_data/binding_master_data_detail.dart';
 import 'package:vis_mobile/app/modules/details/master_data/view_master_data_detail.dart';
+import 'package:vis_mobile/app/modules/global/ap-inv/details/binding_detail_apinv.dart';
+import 'package:vis_mobile/app/modules/global/ap-inv/details/view_detail_apinv.dart';
 import 'package:vis_mobile/app/modules/global/ap-inv/view_apinv.dart';
 import 'package:vis_mobile/app/modules/global/ap-mem/binding_apmem.dart';
 import 'package:vis_mobile/app/modules/global/ap-mem/view_apmem.dart';
 import 'package:vis_mobile/app/modules/global/gr/binding_gr.dart';
 import 'package:vis_mobile/app/modules/global/gr/view_gr.dart';
 import 'package:vis_mobile/app/modules/global/grr/binding_grr.dart';
+import 'package:vis_mobile/app/modules/global/grr/details/binding_detail_grr.dart';
+import 'package:vis_mobile/app/modules/global/grr/details/view_detail_grr.dart';
 import 'package:vis_mobile/app/modules/global/grr/view_grr.dart';
 import 'package:vis_mobile/app/modules/grpo/binding_grpo.dart';
 import 'package:vis_mobile/app/modules/grpo/view_grpo.dart';
@@ -73,10 +77,22 @@ abstract class AppPages {
       transition: Transition.size,
     ),
     GetPage(
+      name: Routes.DETAILGRR,
+      binding: DetailGrrBinding(),
+      page: () => DetailGrrPage(),
+      transition: Transition.fadeIn,
+    ),
+    GetPage(
       name: Routes.APINV,
       binding: ApInvBinding(),
       page: () => ApInvPage(),
       transition: Transition.size,
+    ),
+    GetPage(
+      name: Routes.DETAILAPINV,
+      binding: DetailApInvBinding(),
+      page: () => DetailApInvPage(),
+      transition: Transition.fadeIn,
     ),
     GetPage(
       name: Routes.GRPO,

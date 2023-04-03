@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:vis_mobile/app/core/value/colors.dart';
 import 'package:vis_mobile/app/data/models/global_model.dart';
+import 'package:vis_mobile/app/modules/global/ap-inv/details/controller_detail_apinv.dart';
 import 'package:vis_mobile/app/modules/global/global_controller.dart';
 import 'package:vis_mobile/app/widgets/base_card.dart';
 import 'package:vis_mobile/app/widgets/base_refresh.dart';
@@ -117,12 +118,13 @@ class BodyContent extends StatelessWidget {
 }
 
 class ListApInv extends StatelessWidget {
-  const ListApInv({
+  ListApInv({
     Key? key,
     required this.apinv,
   }) : super(key: key);
 
   final GlobalModel apinv;
+  final controller = Get.find<DetailApInvController>();
 
   @override
   Widget build(BuildContext context) {
@@ -134,7 +136,10 @@ class ListApInv extends StatelessWidget {
     ).format(t_apinv);
 
     return BaseCard(
-      onTap: () {},
+      onTap: () {
+        controller.id.value = apinv.docnum.toString();
+        Get.toNamed('/detailapinv');
+      },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

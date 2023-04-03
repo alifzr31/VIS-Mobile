@@ -28,4 +28,10 @@ class EndPoint {
   // DETAIL PO
   static final String detailpo = '/po-detail';
   static final String detailout = '/po-detail-os';
+
+  // DETAIL GRR
+  static final String detailgrr = '/grr-detail';
+
+  // DETAIL AP-INVOICE
+  static final String detailapinv = '/ap-invoice-detail';
 }
