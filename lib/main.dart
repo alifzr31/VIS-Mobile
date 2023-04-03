@@ -1,15 +1,22 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:vis_mobile/app/routes/pages.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:vis_mobile/app/core/utils/my_http_overrides.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = MyHttpOverrides();
   runApp(const MyApp());
+  configLoading();
+}
+
+void configLoading() {
+  EasyLoading.instance
+    ..indicatorType = EasyLoadingIndicatorType.ripple
+    ..indicatorSize = 60;
 }
 
 class MyApp extends StatelessWidget {
@@ -39,6 +46,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       getPages: AppPages.pages,
+      builder: EasyLoading.init(),
     );
   }
 }
