@@ -105,7 +105,6 @@ class BodyContent extends StatelessWidget {
       onTap: () {
         print(masterdatadetail.warehouseName);
       },
-      splashColor: Colors.black.withOpacity(0.3),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -15,6 +15,11 @@ class EndPoint {
   // HOME TAB
   static final String dash = '/dash';
   static final String po = '/po';
+  static final String grpo = '/grpo';
+  static final String grr = '/grr';
+  static final String gr = '/good-return';
+  static final String ap_inv = '/ap-invoice';
+  static final String ap_mem = '/ap-creditmemo';
 
   // LIST TAB
   static final String masterdata = '/master-data';

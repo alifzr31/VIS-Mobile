@@ -17,7 +17,7 @@ class PurchaseOrderPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        title: const Text('Detail Master Data'),
+        title: const Text('Purchase Order'),
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
@@ -182,24 +182,24 @@ class ListContent extends StatelessWidget {
           Text('Number PO : ${po.docnum}'),
           const SizedBox(height: 20),
           InkWell(
-            onTap: () {
+            onTap: () async {
               controller.id.value = po.docnum.toString();
               print(controller.id.value);
               Get.toNamed('/detailpo');
             },
             child: Text(
               'Total PO : $t_po',
-              style: const TextStyle(color: blueColor),
+              style: const TextStyle(color: blueColor, fontSize: 12, fontWeight: FontWeight.bold),
             ),
           ),
           const SizedBox(height: 8),
           InkWell(
-            onTap: () {
+            onTap: () async {
               Get.toNamed('/detailout');
             },
             child: Text(
               'Outstanding : $t_out',
-              style: const TextStyle(color: blueColor),
+              style: const TextStyle(color: blueColor, fontSize: 12, fontWeight: FontWeight.bold),
             ),
           ),
         ],

@@ -3,9 +3,19 @@ import 'package:vis_mobile/app/modules/dashboard/binding_dashboard.dart';
 import 'package:vis_mobile/app/modules/dashboard/view_dashboard.dart';
 import 'package:vis_mobile/app/modules/details/master_data/binding_master_data_detail.dart';
 import 'package:vis_mobile/app/modules/details/master_data/view_master_data_detail.dart';
+import 'package:vis_mobile/app/modules/global/ap-inv/view_apinv.dart';
+import 'package:vis_mobile/app/modules/global/ap-mem/binding_apmem.dart';
+import 'package:vis_mobile/app/modules/global/ap-mem/view_apmem.dart';
+import 'package:vis_mobile/app/modules/global/gr/binding_gr.dart';
+import 'package:vis_mobile/app/modules/global/gr/view_gr.dart';
+import 'package:vis_mobile/app/modules/global/grr/binding_grr.dart';
+import 'package:vis_mobile/app/modules/global/grr/view_grr.dart';
+import 'package:vis_mobile/app/modules/grpo/binding_grpo.dart';
+import 'package:vis_mobile/app/modules/grpo/view_grpo.dart';
 import 'package:vis_mobile/app/modules/login/binding_login.dart';
 import 'package:vis_mobile/app/modules/login/view_login.dart';
 import 'package:vis_mobile/app/modules/purchase_order/binding_po.dart';
+import 'package:vis_mobile/app/modules/global/ap-inv/binding_apinv.dart';
 import 'package:vis_mobile/app/modules/purchase_order/details/binding_detail_po.dart';
 import 'package:vis_mobile/app/modules/purchase_order/details/view_detail_out.dart';
 import 'package:vis_mobile/app/modules/purchase_order/details/view_detail_po.dart';
@@ -55,6 +65,36 @@ abstract class AppPages {
       binding: DetailPOBinding(),
       page: () => DetailOutPage(),
       transition: Transition.fadeIn,
+    ),
+    GetPage(
+      name: Routes.GRR,
+      binding: GrrBinding(),
+      page: () => GrrPage(),
+      transition: Transition.size,
+    ),
+    GetPage(
+      name: Routes.APINV,
+      binding: ApInvBinding(),
+      page: () => ApInvPage(),
+      transition: Transition.size,
+    ),
+    GetPage(
+      name: Routes.GRPO,
+      binding: GrpoBinding(),
+      page: () => GrpoPage(),
+      transition: Transition.size,
+    ),
+    GetPage(
+      name: Routes.GR,
+      binding: GrBinding(),
+      page: () => GrPage(),
+      transition: Transition.size,
+    ),
+    GetPage(
+      name: Routes.APMEM,
+      binding: ApMemBinding(),
+      page: () => ApMemPage(),
+      transition: Transition.size,
     ),
   ];
 }

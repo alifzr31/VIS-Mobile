@@ -266,7 +266,7 @@ class _ContentBodyState extends State<ContentBody> {
                         CardBody(
                           icon: FontAwesome.box,
                           onTap: () {
-                            print('GRR');
+                            Get.toNamed('/grr');
                           },
                         ),
                         const Text(
@@ -285,7 +285,7 @@ class _ContentBodyState extends State<ContentBody> {
                         CardBody(
                           icon: FontAwesome.folder,
                           onTap: () {
-                            print('AP Invoice');
+                            Get.toNamed('/apinv');
                           },
                         ),
                         const Text(
@@ -307,7 +307,7 @@ class _ContentBodyState extends State<ContentBody> {
                         CardBody(
                           icon: FontAwesome.file,
                           onTap: () {
-                            print('GRPO');
+                            Get.toNamed('/grpo');
                           },
                         ),
                         const Text(
@@ -326,7 +326,7 @@ class _ContentBodyState extends State<ContentBody> {
                         CardBody(
                           icon: FontAwesome.box_archive,
                           onTap: () {
-                            print('GR');
+                            Get.toNamed('/gr');
                           },
                         ),
                         const Text(
@@ -345,7 +345,7 @@ class _ContentBodyState extends State<ContentBody> {
                         CardBody(
                           icon: FontAwesome.folder_open,
                           onTap: () {
-                            print('AP Credit Memo');
+                            Get.toNamed('/apmem');
                           },
                         ),
                         const Text(
