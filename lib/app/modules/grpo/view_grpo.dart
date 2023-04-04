@@ -1,11 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:vis_mobile/app/core/value/colors.dart';
 import 'package:vis_mobile/app/data/models/grpo.dart';
 import 'package:vis_mobile/app/modules/grpo/controller_grpo.dart';
+import 'package:vis_mobile/app/modules/grpo/details/controller_detail_grpo.dart';
 import 'package:vis_mobile/app/widgets/base_card.dart';
 import 'package:vis_mobile/app/widgets/base_refresh.dart';
 
@@ -118,17 +117,21 @@ class BodyContent extends StatelessWidget {
 }
 
 class ListGrpo extends StatelessWidget {
-  const ListGrpo({
+  ListGrpo({
     Key? key,
     required this.grpo,
   }) : super(key: key);
 
   final Grpo grpo;
+  final controller = Get.find<DetailGrpoController>();
 
   @override
   Widget build(BuildContext context) {
     return BaseCard(
-      onTap: () {},
+      onTap: () {
+        controller.id.value = grpo.docGrpo.toString();
+        Get.toNamed('/detailgrpo');
+      },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

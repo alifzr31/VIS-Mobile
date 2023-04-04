@@ -37,4 +37,10 @@ class EndPoint {
 
   // DETAIL GOODS RETURN
   static final String detailgr = '/good-return-detail';
+
+  // DETAIL AP CREDIT MEMO
+  static final String detailapmem = '/ap-creditmemo-detail';
+
+  // DETAIL GRPO
+  static final String detailgrpo = '/grpo-detail';
 }

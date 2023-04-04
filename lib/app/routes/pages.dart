@@ -7,6 +7,8 @@ import 'package:vis_mobile/app/modules/global/ap-inv/details/binding_detail_apin
 import 'package:vis_mobile/app/modules/global/ap-inv/details/view_detail_apinv.dart';
 import 'package:vis_mobile/app/modules/global/ap-inv/view_apinv.dart';
 import 'package:vis_mobile/app/modules/global/ap-mem/binding_apmem.dart';
+import 'package:vis_mobile/app/modules/global/ap-mem/details/binding_detail_apmem.dart';
+import 'package:vis_mobile/app/modules/global/ap-mem/details/view_detail_apmem.dart';
 import 'package:vis_mobile/app/modules/global/ap-mem/view_apmem.dart';
 import 'package:vis_mobile/app/modules/global/gr/binding_gr.dart';
 import 'package:vis_mobile/app/modules/global/gr/details/binding_detail_gr.dart';
@@ -17,6 +19,8 @@ import 'package:vis_mobile/app/modules/global/grr/details/binding_detail_grr.dar
 import 'package:vis_mobile/app/modules/global/grr/details/view_detail_grr.dart';
 import 'package:vis_mobile/app/modules/global/grr/view_grr.dart';
 import 'package:vis_mobile/app/modules/grpo/binding_grpo.dart';
+import 'package:vis_mobile/app/modules/grpo/details/binding_detail_grpo.dart';
+import 'package:vis_mobile/app/modules/grpo/details/view_detail_grpo.dart';
 import 'package:vis_mobile/app/modules/grpo/view_grpo.dart';
 import 'package:vis_mobile/app/modules/login/binding_login.dart';
 import 'package:vis_mobile/app/modules/login/view_login.dart';
@@ -103,6 +107,12 @@ abstract class AppPages {
       transition: Transition.size,
     ),
     GetPage(
+      name: Routes.DETAILGRPO,
+      binding: DetailGrpoBinding(),
+      page: () => DetailGrpoPage(),
+      transition: Transition.fadeIn,
+    ),
+    GetPage(
       name: Routes.GR,
       binding: GrBinding(),
       page: () => GrPage(),
@@ -119,6 +129,12 @@ abstract class AppPages {
       binding: ApMemBinding(),
       page: () => ApMemPage(),
       transition: Transition.size,
+    ),
+    GetPage(
+      name: Routes.DETAILAPMEM,
+      binding: DetailApMemBinding(),
+      page: () => DetailApMemPage(),
+      transition: Transition.fadeIn,
     ),
   ];
 }

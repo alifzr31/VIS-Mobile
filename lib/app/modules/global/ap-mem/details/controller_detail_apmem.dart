@@ -4,44 +4,42 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vis_mobile/app/core/value/colors.dart';
-import 'package:vis_mobile/app/data/models/master_data.dart';
-import 'package:vis_mobile/app/data/providers/master_provider.dart';
+import 'package:vis_mobile/app/data/models/detail_apmem.dart';
+import 'package:vis_mobile/app/data/providers/detail_apmem.dart';
 
-class MasterDataController extends GetxController {
-  final MasterProvider masterProvider;
+class DetailApMemController extends GetxController {
+  final DetailApMemProvider detailApMemProvider;
 
-  MasterDataController({required this.masterProvider});
+  DetailApMemController({required this.detailApMemProvider});
 
   var isLoading = true.obs;
-  final masterdata = <MasterData>[].obs;
-  var stok = 0.obs;
-  var total_row = 0.obs;
+  final total_row = 0.obs;
+  var id = ''.obs;
+  var detailapmem = <DetailApMem>[].obs;
 
   @override
   void onInit() {
-    fetchMasterData();
+    fetchDetailApMem();
     super.onInit();
   }
 
-  void fetchMasterData() async {
+  void fetchDetailApMem() async {
     try {
-      final response = await masterProvider.fetchMasterData();
+      final response = await detailApMemProvider.fetchDetailApMem(id);
       final body = jsonDecode(response.body);
 
       if (response.statusCode == 200) {
-        stok.value = body['total_row'];
         total_row.value = body['total_row'];
-        print(stok.value);
 
-        masterdata.value = body['data'] == null
+        detailapmem.value = body['data'] == null
             ? []
-            : listMasterDataFromJson(jsonEncode(body['data']));
+            : listDetailApMemFromJson(jsonEncode(body['data']));
 
         update();
       } else {
         Get.snackbar(
           'Failed',
-          response.statusCode.toString(),
+          '${response.statusCode}',
           backgroundColor: Colors.amber.withOpacity(0.8),
           colorText: blueColor,
           icon: const Icon(Icons.warning, color: blueColor),

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:vis_mobile/app/core/value/colors.dart';
 import 'package:vis_mobile/app/data/models/global_model.dart';
+import 'package:vis_mobile/app/modules/global/ap-mem/details/controller_detail_apmem.dart';
 import 'package:vis_mobile/app/modules/global/global_controller.dart';
 import 'package:vis_mobile/app/widgets/base_card.dart';
 import 'package:vis_mobile/app/widgets/base_refresh.dart';
@@ -117,12 +118,13 @@ class BodyContent extends StatelessWidget {
 }
 
 class ListApMem extends StatelessWidget {
-  const ListApMem({
+  ListApMem({
     Key? key,
     required this.apmem,
   }) : super(key: key);
 
   final GlobalModel apmem;
+  final controller = Get.find<DetailApMemController>();
 
   @override
   Widget build(BuildContext context) {
@@ -134,7 +136,10 @@ class ListApMem extends StatelessWidget {
     ).format(t_apmem);
     
     return BaseCard(
-      onTap: () {},
+      onTap: () {
+        controller.id.value = apmem.docnum.toString();
+        Get.toNamed('/detailapmem');
+      },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -142,7 +147,7 @@ class ListApMem extends StatelessWidget {
               style: const TextStyle(fontSize: 12)),
           const SizedBox(height: 5),
           Text(
-            'Goods Return Number : ${apmem.docnum}',
+            'Number AP Credit Memo : ${apmem.docnum}',
             style: const TextStyle(fontSize: 12),
           ),
           const SizedBox(height: 5),
@@ -150,7 +155,7 @@ class ListApMem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Goods Return : $total_apmem',
+                'AP Credit Memo : $total_apmem',
                 style: const TextStyle(
                   fontSize: 12,
                   color: blueColor,
