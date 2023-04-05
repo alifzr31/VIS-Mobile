@@ -44,6 +44,7 @@ dependencies:
   simple_circular_progress_bar: ^1.0.2
   curved_navigation_bar: ^1.0.3
   flutter_easyloading: ^3.0.5
+  data_table_2: ^2.4.1
 
 dev_dependencies:
   flutter_test:

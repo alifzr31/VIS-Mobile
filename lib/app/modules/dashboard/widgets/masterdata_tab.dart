@@ -1,8 +1,10 @@
+import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vis_mobile/app/modules/dashboard/controllers/masterdata_controller.dart';
 import 'package:vis_mobile/app/modules/details/master_data/controller_master_data_detail.dart';
+import 'package:vis_mobile/app/widgets/base_datatable.dart';
 import 'package:vis_mobile/app/widgets/base_refresh.dart';
 
 class MasterDataTab extends StatelessWidget {
@@ -42,7 +44,7 @@ class HeaderContent extends StatelessWidget {
         Center(
           child: Text(
             // 'Total ' + controller.stok.value.toString() + ' Stock',
-            controller.total_row.value.toString(),
+            'Total ' + controller.total_row.value.toString() + ' Stock',
             style: const TextStyle(fontSize: 18),
           ),
         ),
@@ -61,55 +63,51 @@ class ListMasterData extends StatelessWidget {
     return Obx(
       () => controller.isLoading.value
           ? const Center(child: CupertinoActivityIndicator())
-          : BaseRefresh(
-              onRefresh: () async {
-                await Future.delayed(const Duration(seconds: 3));
-                controller.fetchMasterData();
-              },
-              child: ListView.builder(
-                itemCount: controller.masterdata.length,
-                itemBuilder: (context, index) {
-                  return Card(
-                    elevation: 3,
-                    color: Colors.grey.shade400,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                    child: InkWell(
-                      onTap: () async {
-                        ctrl.id.value = controller.masterdata[index].code!;
-                        Get.toNamed('/masterdatadetail');
-                      },
-                      splashColor: Colors.black.withOpacity(0.3),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 20),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Vendor Code : ' +
-                                  controller.masterdata[index].code!,
-                              style: const TextStyle(color: Colors.black),
+          : BaseDataTable(
+              columns: const [
+                DataColumn2(
+                  label: Center(child: Text('Vendor Code')),
+                  size: ColumnSize.L,
+                  fixedWidth: 100,
+                ),
+                DataColumn(
+                  label: Center(child: Text('Item Name')),
+                ),
+                DataColumn(
+                  label: Center(child: Text('Stock')),
+                ),
+                DataColumn(
+                  label: Center(child: Text('Action')),
+                ),
+              ],
+              rows: <DataRow>[
+                ...controller.masterdata
+                    .map(
+                      (element) => DataRow(
+                        cells: <DataCell>[
+                          DataCell(Text(element.code.toString())),
+                          DataCell(Text(element.name.toString())),
+                          DataCell(
+                              Center(child: Text(element.stock.toString()))),
+                          DataCell(
+                            onTap: () async {
+                              ctrl.id.value = element.code!;
+                              print(ctrl.id.value);
+                              Get.toNamed('/masterdatadetail');
+                            },
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: const [
+                                Icon(Icons.find_in_page),
+                                Text('Show Detail'),
+                              ],
                             ),
-                            Text(
-                              'Item Name : ' +
-                                  controller.masterdata[index].name!,
-                              style: const TextStyle(color: Colors.black),
-                            ),
-                            Text(
-                              'Stock : ' +
-                                  controller.masterdata[index].stock.toString(),
-                              style: const TextStyle(color: Colors.black),
-                            )
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    ),
-                  );
-                },
-              ),
+                    )
+                    .toList()
+              ],
             ),
     );
   }
