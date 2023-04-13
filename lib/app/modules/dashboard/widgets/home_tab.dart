@@ -11,25 +11,48 @@ import 'package:vis_mobile/app/widgets/base_datatable.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:vis_mobile/app/widgets/base_refresh.dart';
 
-class HomeTab extends StatelessWidget {
+class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
+
+  @override
+  State<HomeTab> createState() => _HomeTabState();
+}
+
+class _HomeTabState extends State<HomeTab> {
+  final ctrl_user = Get.find<UserController>();
+  final ctrl_rank = Get.find<RankingController>();
+  final ctrl_report = Get.find<ReportController>();
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.all(20),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              ContentBody(),
-              const Divider(),
-              ListRankingBfMonth(),
-              const Divider(),
-              ListRangkingThisMonth(),
-              const Divider(),
-              ListReport(),
-            ],
+        child: BaseRefresh(
+          onRefresh: () async {
+            await Future.delayed(const Duration(seconds: 3));
+            setState(() {
+              ctrl_user.fetchProfile();
+              ctrl_rank.fetchRankbfMonth();
+              ctrl_rank.fetchRankthisMonth();
+              ctrl_report.fetchReport();
+              ctrl_report.fetchReportYear();
+            });
+          },
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                ContentBody(),
+                const Divider(),
+                ListRankingBfMonth(),
+                const Divider(),
+                ListRangkingThisMonth(),
+                const Divider(),
+                ListReport(),
+                const Divider(),
+                ListReportYear(),
+              ],
+            ),
           ),
         ),
       ),
@@ -339,12 +362,30 @@ class ListReport extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final total_awal = NumberFormat.currency(
+      locale: 'id_ID',
+      symbol: 'Rp ',
+    ).format(controller.total_awal.value);
+
+    final total_akhir = NumberFormat.currency(
+      locale: 'id_ID',
+      symbol: 'Rp ',
+    ).format(controller.total_akhir.value);
+
+    final sum = controller.total_akhir.value - controller.total_awal.value;
+    final summary = NumberFormat.currency(
+      locale: 'id_ID',
+      symbol: 'Rp ',
+    ).format(sum);
+
+    var jumlah = sum / controller.total_awal.value;
+    final percent = (jumlah * 100).toStringAsFixed(0);
+
     return Obx(
       () => controller.isLoading.value
           ? const Center(child: CupertinoActivityIndicator())
           : SizedBox(
-              // height: Get.height * 0.8,
-              height: Get.height * 0.55,
+              height: Get.height * 0.85,
               child: Column(
                 children: [
                   Align(
@@ -360,23 +401,42 @@ class ListReport extends StatelessWidget {
                     height: 2,
                   ),
                   const Divider(),
-                  // Align(
-                  //   alignment: Alignment.centerLeft,
-                  //   child: Column(
-                  //     crossAxisAlignment: CrossAxisAlignment.start,
-                  //     children: [
-                  //       Text(
-                  //           'Total ${controller.start_awal} - ${controller.end_awal} :'),
-                  //       Text('Rp 999.999.999,-'),
-                  //       Text(
-                  //           'Total ${controller.start_akhir} - ${controller.end_akhir} :'),
-                  //       Text('Rp 999.999.999,-'),
-                  //       Text('Summary :'),
-                  //       Text('Summary Percentage :'),
-                  //     ],
-                  //   ),
-                  // ),
-                  // const Divider(height: 5),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Total ${controller.start_awal} - ${controller.end_awal} :',
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        const Divider(height: 3),
+                        Text(total_awal),
+                        const Divider(height: 5),
+                        Text(
+                          'Total ${controller.start_akhir} - ${controller.end_akhir} :',
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        const Divider(height: 3),
+                        Text(total_akhir),
+                        const Divider(height: 5),
+                        Text(
+                          'Summary :',
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        const Divider(height: 3),
+                        Text(summary),
+                        const Divider(height: 5),
+                        Text(
+                          'Summary Percentage :',
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        const Divider(height: 3),
+                        Text('$percent%'),
+                      ],
+                    ),
+                  ),
+                  const Divider(height: 5),
                   Expanded(
                     child: BaseDataTable(
                       columns: [
@@ -397,12 +457,18 @@ class ListReport extends StatelessWidget {
                               controller.end_akhir.value),
                           size: ColumnSize.L,
                         ),
-                        // DataColumn(
-                        //   label: const Center(child: Text('Percentage (%)')),
-                        // ),
+                        DataColumn(
+                          label: const Center(child: Text('Percentage (%)')),
+                        ),
                       ],
                       rows: [
                         ...controller.reportytmonth.map((element) {
+                          var selisih = int.parse(element.col3.toString()) -
+                              int.parse(element.col2.toString());
+                          var jumlah =
+                              selisih / int.parse(element.col2.toString());
+                          final percent = (jumlah * 100).toStringAsFixed(2);
+
                           final col2 = NumberFormat.currency(
                             locale: 'id_ID',
                             symbol: 'Rp ',
@@ -418,7 +484,163 @@ class ListReport extends StatelessWidget {
                               DataCell(Text(element.branchName!)),
                               DataCell(Text(col2)),
                               DataCell(Text(col3)),
-                              // DataCell(Center(child: Text(element.col2.toString()))),
+                              if (jumlah < 0)
+                                DataCell(Center(
+                                    child: Text(
+                                  '$percent %',
+                                  style: const TextStyle(color: Colors.red),
+                                )))
+                              else
+                                DataCell(Center(child: Text('$percent%'))),
+                            ],
+                          );
+                        }).toList()
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+    );
+  }
+}
+
+class ListReportYear extends StatelessWidget {
+  ListReportYear({super.key});
+  final controller = Get.find<ReportController>();
+
+  @override
+  Widget build(BuildContext context) {
+    final total_awal = NumberFormat.currency(
+      locale: 'id_ID',
+      symbol: 'Rp ',
+    ).format(controller.total_awal_year.value);
+
+    final total_akhir = NumberFormat.currency(
+      locale: 'id_ID',
+      symbol: 'Rp ',
+    ).format(controller.total_akhir_year.value);
+
+    final sum = controller.total_akhir_year.value - controller.total_awal_year.value;
+    final summary = NumberFormat.currency(
+      locale: 'id_ID',
+      symbol: 'Rp ',
+    ).format(sum);
+
+    var jumlah = sum / controller.total_awal_year.value;
+    final percent = (jumlah * 100).toStringAsFixed(0);
+
+    return Obx(
+      () => controller.isLoading.value
+          ? const Center(child: CupertinoActivityIndicator())
+          : SizedBox(
+              height: Get.height * 0.90,
+              child: Column(
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Report Years to Date',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  const Divider(),
+                  Container(
+                    color: Colors.black,
+                    height: 2,
+                  ),
+                  const Divider(),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Total ${controller.start_awal} - ${controller.end_awal} :',
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        const Divider(height: 3),
+                        Text(total_awal),
+                        const Divider(height: 5),
+                        Text(
+                          'Total ${controller.start_akhir} - ${controller.end_akhir} :',
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        const Divider(height: 3),
+                        Text(total_akhir),
+                        const Divider(height: 5),
+                        Text(
+                          'Summary :',
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        const Divider(height: 3),
+                        Text(summary),
+                        const Divider(height: 5),
+                        Text(
+                          'Summary Percentage :',
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        const Divider(height: 3),
+                        Text('$percent%'),
+                      ],
+                    ),
+                  ),
+                  const Divider(height: 5),
+                  Expanded(
+                    child: BaseDataTable(
+                      columns: [
+                        DataColumn2(
+                          label: const Text('Branch Name'),
+                          size: ColumnSize.S,
+                          fixedWidth: 200,
+                        ),
+                        DataColumn2(
+                          label: Text(controller.start_awal.value +
+                              ' - ' +
+                              controller.end_awal.value),
+                          size: ColumnSize.L,
+                        ),
+                        DataColumn2(
+                          label: Text(controller.start_akhir.value +
+                              ' - ' +
+                              controller.end_akhir.value),
+                          size: ColumnSize.L,
+                        ),
+                        DataColumn(
+                          label: const Center(child: Text('Percentage (%)')),
+                        ),
+                      ],
+                      rows: [
+                        ...controller.reportytdate.map((element) {
+                          var selisih = int.parse(element.col3.toString()) -
+                              int.parse(element.col2.toString());
+                          var jumlah =
+                              selisih / int.parse(element.col2.toString());
+                          final percent = (jumlah * 100).toStringAsFixed(2);
+
+                          final col2 = NumberFormat.currency(
+                            locale: 'id_ID',
+                            symbol: 'Rp ',
+                          ).format(element.col2);
+
+                          final col3 = NumberFormat.currency(
+                            locale: 'id_ID',
+                            symbol: 'Rp ',
+                          ).format(element.col3);
+
+                          return DataRow(
+                            cells: [
+                              DataCell(Text(element.branchName!)),
+                              DataCell(Text(col2)),
+                              DataCell(Text(col3)),
+                              if (jumlah < 0)
+                                DataCell(Center(
+                                    child: Text(
+                                  '$percent %',
+                                  style: const TextStyle(color: Colors.red),
+                                )))
+                              else
+                                DataCell(Center(child: Text('$percent%'))),
                             ],
                           );
                         }).toList()

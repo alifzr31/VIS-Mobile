@@ -23,6 +23,7 @@ class EndPoint {
   static final String rank_bfmonth = '/rank-bfmonth';
   static final String rank_thismonth = '/rank-thismonth';
   static final String rank_ytmonth = '/rank-ytmonth';
+  static final String rank_ytdate = '/rank-ytdate';
 
   // LIST TAB
   static final String masterdata = '/master-data';
