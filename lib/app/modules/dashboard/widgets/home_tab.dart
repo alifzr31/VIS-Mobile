@@ -1,370 +1,140 @@
+import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:intl/intl.dart';
+import 'package:vis_mobile/app/modules/dashboard/controllers/ranking_controller.dart';
+import 'package:vis_mobile/app/modules/dashboard/controllers/report_controller.dart';
 import 'package:vis_mobile/app/modules/dashboard/controllers/user_controller.dart';
+import 'package:vis_mobile/app/widgets/base_datatable.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:vis_mobile/app/widgets/base_refresh.dart';
 
-class HomeTab extends StatefulWidget {
+class HomeTab extends StatelessWidget {
   const HomeTab({super.key});
 
-  @override
-  State<HomeTab> createState() => _HomeTabState();
-}
-
-class _HomeTabState extends State<HomeTab> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            HeaderBody(),
-            const SizedBox(height: 10),
-            Expanded(
-              child: ContentBody(),
-            ),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              ContentBody(),
+              const Divider(),
+              ListRankingBfMonth(),
+              const Divider(),
+              ListRangkingThisMonth(),
+              const Divider(),
+              ListReport(),
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-class HeaderBody extends StatelessWidget {
-  HeaderBody({super.key});
-  final controller = Get.find<UserController>();
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: Get.width,
-      child: Column(
-        children: [
-          const Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              'Dashboard',
-              style: TextStyle(
-                fontSize: 26,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-          const SizedBox(height: 10),
-          Container(
-            height: 2,
-            color: Colors.grey,
-          ),
-          const SizedBox(height: 10),
-          Obx(
-            () => controller.isLoading.value
-                ? SizedBox(
-                    height: 80,
-                    child: const Center(
-                      child: CupertinoActivityIndicator(),
-                    ),
-                  )
-                : Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              const Icon(
-                                HeroIcons.user_circle,
-                                size: 28,
-                              ),
-                              const SizedBox(width: 5),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    controller.dash.value!.namaVendor
-                                        .toString(),
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  Text(
-                                    controller.dash.value!.kodeVendor
-                                        .toString(),
-                                    style: const TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 10),
-                          Row(
-                            children: [
-                              const Icon(
-                                FontAwesome.file,
-                                size: 28,
-                              ),
-                              const SizedBox(width: 5),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Text(
-                                    'Federal Tax ID',
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  Text(
-                                    controller.profile.value!.federalTaxId
-                                        .toString(),
-                                    style: const TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      SizedBox(width: Get.width * 0.10),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              const Icon(
-                                IonIcons.mail,
-                                size: 28,
-                              ),
-                              const SizedBox(width: 5),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Text(
-                                    'Vendor Email',
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  Text(
-                                    controller.profile.value!.email.toString(),
-                                    style: const TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 10),
-                          Row(
-                            children: [
-                              const Icon(
-                                HeroIcons.device_phone_mobile,
-                                size: 28,
-                              ),
-                              const SizedBox(width: 5),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Text(
-                                    'Vendor Mobile',
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  Text(
-                                    controller.profile.value!.mobilePhone
-                                        .toString(),
-                                    style: const TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-          ),
-          const SizedBox(height: 10),
-          Container(
-            height: 2,
-            color: Colors.grey,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class ContentBody extends StatefulWidget {
+class ContentBody extends StatelessWidget {
   ContentBody({super.key});
-
-  @override
-  State<ContentBody> createState() => _ContentBodyState();
-}
-
-class _ContentBodyState extends State<ContentBody> {
   final controller = Get.find<UserController>();
 
   @override
   Widget build(BuildContext context) {
+    final date = DateTime.now();
+    var format = DateFormat('dd MMMM yyyy - HH:mm');
+    final now = format.format(date);
+
+    List<Widget> cards = [
+      CardBody(
+        label: 'Purchase Order',
+        currency: controller.total_po.value,
+        icon: FontAwesome.file_lines,
+        onTap: () {
+          Get.toNamed('/po');
+        },
+      ),
+      CardBody(
+        label: 'Goods Receipt PO',
+        currency: controller.total_grpo.value,
+        icon: FontAwesome.file,
+        onTap: () {
+          Get.toNamed('/grpo');
+        },
+      ),
+      CardBody(
+        label: 'Goods Return Request',
+        currency: controller.total_grr.value,
+        icon: FontAwesome.box,
+        onTap: () {
+          Get.toNamed('/grr');
+        },
+      ),
+      CardBody(
+        label: 'Goods Return',
+        currency: controller.total_gr.value,
+        icon: FontAwesome.box_archive,
+        onTap: () {
+          Get.toNamed('/gr');
+        },
+      ),
+      CardBody(
+        label: 'AP Invoice',
+        currency: controller.total_ap_inv.value,
+        icon: FontAwesome.folder,
+        onTap: () {
+          Get.toNamed('/apinv');
+        },
+      ),
+      CardBody(
+        label: 'AP Credit Memo',
+        currency: controller.total_ap_mem.value,
+        icon: FontAwesome.folder_open,
+        onTap: () {
+          Get.toNamed('/apmem');
+        },
+      ),
+    ];
+
     return Obx(
       () => controller.isLoading.value
           ? const Center(child: CupertinoActivityIndicator())
-          : BaseRefresh(
-              onRefresh: () async {
-                await Future.delayed(const Duration(seconds: 3));
-                
-                setState(() {
-                  controller.fetchProfile();
-                });
-              },
-              child: SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                child: Row(
+          : Column(
+              children: [
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Column(
-                      children: [
-                        CardBody(
-                          icon: FontAwesome.file,
-                          onTap: () {
-                            Get.toNamed('/po');
-                          },
-                        ),
-                        const Text(
-                          'Purchase Order',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        Text(
-                          controller.total_po.value,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        CardBody(
-                          icon: FontAwesome.box,
-                          onTap: () {
-                            Get.toNamed('/grr');
-                          },
-                        ),
-                        const Text(
-                          'Goods Return Request',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        Text(
-                          controller.total_grr.value,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        CardBody(
-                          icon: FontAwesome.folder,
-                          onTap: () {
-                            Get.toNamed('/apinv');
-                          },
-                        ),
-                        const Text(
-                          'AP Invoice',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        Text(
-                          controller.total_ap_inv.value,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ],
+                    Text(
+                      controller.dash.value!.namaVendor!.capitalize.toString(),
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
-                    Column(
-                      children: [
-                        CardBody(
-                          icon: FontAwesome.file,
-                          onTap: () {
-                            Get.toNamed('/grpo');
-                          },
-                        ),
-                        const Text(
-                          'Goods Receipt PO',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        Text(
-                          controller.total_grpo.value,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        CardBody(
-                          icon: FontAwesome.box_archive,
-                          onTap: () {
-                            Get.toNamed('/gr');
-                          },
-                        ),
-                        const Text(
-                          'Goods Return',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        Text(
-                          controller.total_gr.value,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        CardBody(
-                          icon: FontAwesome.folder_open,
-                          onTap: () {
-                            Get.toNamed('/apmem');
-                          },
-                        ),
-                        const Text(
-                          'AP Credit Memo',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        Text(
-                          controller.total_ap_mem.value,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ],
-                    ),
+                    Text(now.toString()),
                   ],
                 ),
-              ),
+                const Divider(height: 5),
+                Container(
+                  height: 2,
+                  color: Colors.black,
+                ),
+                const Divider(height: 5),
+                SizedBox(
+                  width: Get.width,
+                  height: 200,
+                  child: Swiper(
+                    itemCount: cards.length,
+                    pagination: SwiperPagination(),
+                    curve: Curves.bounceOut,
+                    itemBuilder: (context, index) {
+                      return cards[index];
+                    },
+                  ),
+                ),
+              ],
             ),
     );
   }
@@ -375,10 +145,14 @@ class CardBody extends StatelessWidget {
     Key? key,
     required this.icon,
     this.onTap,
+    required this.label,
+    required this.currency,
   }) : super(key: key);
 
   final IconData icon;
   final void Function()? onTap;
+  final String label;
+  final String currency;
 
   @override
   Widget build(BuildContext context) {
@@ -391,15 +165,269 @@ class CardBody extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         child: Padding(
-          padding: const EdgeInsets.all(30.0),
-          child: Icon(
-            icon,
-            size: 80,
-            // color: Color.fromARGB(255, 21, 114, 161),
-            color: Colors.white,
+          padding: const EdgeInsets.all(25.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Icon(
+                icon,
+                size: 80,
+                color: Colors.white,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    label,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const Divider(height: 3),
+                  Text(
+                    currency,
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class ListRankingBfMonth extends StatelessWidget {
+  ListRankingBfMonth({super.key});
+  final controller = Get.find<RankingController>();
+
+  @override
+  Widget build(BuildContext context) {
+    // var mo = '2023-${controller.prev_month.value}-01 00:00:00.000';
+    // var m = DateFormat('M').parse(mo);
+    // var format = DateFormat('MMMM');
+    // final month = format.format(m);
+    // print(m);
+    // var formatmonth = DateFormat('MMMM');
+    // final month = formatmonth.format(m);
+
+    return Obx(
+      () => controller.isLoading.value
+          ? const Center(child: CupertinoActivityIndicator())
+          : SizedBox(
+              height: Get.height * 0.50,
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Ranking Before Month',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        controller.prev_month.toString() +
+                            ' - ' +
+                            controller.this_year.toString(),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  const Divider(),
+                  Container(
+                    color: Colors.black,
+                    height: 2,
+                  ),
+                  Expanded(
+                    child: ListView(
+                      children: [
+                        ...controller.rankingbfmonth
+                            .map(
+                              (element) => Container(
+                                decoration: BoxDecoration(
+                                    border: Border(bottom: BorderSide())),
+                                child: ListTile(
+                                  onTap: () {},
+                                  leading: Text(element.ranking.toString()),
+                                  title: Text(element.vendor!,
+                                      style: const TextStyle(fontSize: 14)),
+                                  // subtitle: Text(element.brand!),
+                                  trailing: Text(element.brand!,
+                                      style: const TextStyle(fontSize: 12)),
+                                ),
+                              ),
+                            )
+                            .toList()
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+    );
+  }
+}
+
+class ListRangkingThisMonth extends StatelessWidget {
+  ListRangkingThisMonth({super.key});
+  final controller = Get.find<RankingController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(
+      () => SizedBox(
+        height: Get.height * 0.50,
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Ranking This Month',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  controller.this_month.toString() +
+                      ' - ' +
+                      controller.this_year.toString(),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+            const Divider(),
+            Container(
+              color: Colors.black,
+              height: 2,
+            ),
+            Expanded(
+              child: ListView(
+                children: [
+                  ...controller.rankingthismonth
+                      .map(
+                        (element) => Container(
+                          decoration: BoxDecoration(
+                              border: Border(bottom: BorderSide())),
+                          child: ListTile(
+                            onTap: () {},
+                            leading: Text(element.ranking.toString()),
+                            title: Text(element.vendor!,
+                                style: const TextStyle(fontSize: 14)),
+                            // subtitle: Text(element.brand!),
+                            trailing: Text(element.brand!,
+                                style: const TextStyle(fontSize: 12)),
+                          ),
+                        ),
+                      )
+                      .toList()
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ListReport extends StatelessWidget {
+  ListReport({super.key});
+  final controller = Get.find<ReportController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(
+      () => controller.isLoading.value
+          ? const Center(child: CupertinoActivityIndicator())
+          : SizedBox(
+              // height: Get.height * 0.8,
+              height: Get.height * 0.55,
+              child: Column(
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Report Month to Date',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  const Divider(),
+                  Container(
+                    color: Colors.black,
+                    height: 2,
+                  ),
+                  const Divider(),
+                  // Align(
+                  //   alignment: Alignment.centerLeft,
+                  //   child: Column(
+                  //     crossAxisAlignment: CrossAxisAlignment.start,
+                  //     children: [
+                  //       Text(
+                  //           'Total ${controller.start_awal} - ${controller.end_awal} :'),
+                  //       Text('Rp 999.999.999,-'),
+                  //       Text(
+                  //           'Total ${controller.start_akhir} - ${controller.end_akhir} :'),
+                  //       Text('Rp 999.999.999,-'),
+                  //       Text('Summary :'),
+                  //       Text('Summary Percentage :'),
+                  //     ],
+                  //   ),
+                  // ),
+                  // const Divider(height: 5),
+                  Expanded(
+                    child: BaseDataTable(
+                      columns: [
+                        DataColumn2(
+                          label: const Text('Branch Name'),
+                          size: ColumnSize.S,
+                          fixedWidth: 200,
+                        ),
+                        DataColumn2(
+                          label: Text(controller.start_awal.value +
+                              ' - ' +
+                              controller.end_awal.value),
+                          size: ColumnSize.L,
+                        ),
+                        DataColumn2(
+                          label: Text(controller.start_akhir.value +
+                              ' - ' +
+                              controller.end_akhir.value),
+                          size: ColumnSize.L,
+                        ),
+                        // DataColumn(
+                        //   label: const Center(child: Text('Percentage (%)')),
+                        // ),
+                      ],
+                      rows: [
+                        ...controller.reportytmonth.map((element) {
+                          final col2 = NumberFormat.currency(
+                            locale: 'id_ID',
+                            symbol: 'Rp ',
+                          ).format(element.col2);
+
+                          final col3 = NumberFormat.currency(
+                            locale: 'id_ID',
+                            symbol: 'Rp ',
+                          ).format(element.col3);
+
+                          return DataRow(
+                            cells: [
+                              DataCell(Text(element.branchName!)),
+                              DataCell(Text(col2)),
+                              DataCell(Text(col3)),
+                              // DataCell(Center(child: Text(element.col2.toString()))),
+                            ],
+                          );
+                        }).toList()
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
     );
   }
 }

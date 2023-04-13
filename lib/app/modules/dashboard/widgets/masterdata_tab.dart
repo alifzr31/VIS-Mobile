@@ -66,18 +66,18 @@ class ListMasterData extends StatelessWidget {
           : BaseDataTable(
               columns: const [
                 DataColumn2(
-                  label: Center(child: Text('Vendor Code')),
+                  label: const Center(child: Text('Vendor Code')),
                   size: ColumnSize.L,
                   fixedWidth: 100,
                 ),
                 DataColumn(
-                  label: Center(child: Text('Item Name')),
+                  label: const Center(child: Text('Item Name')),
                 ),
                 DataColumn(
-                  label: Center(child: Text('Stock')),
+                  label: const Center(child: Text('Stock')),
                 ),
                 DataColumn(
-                  label: Center(child: Text('Action')),
+                  label: const Center(child: Text('Action')),
                 ),
               ],
               rows: <DataRow>[

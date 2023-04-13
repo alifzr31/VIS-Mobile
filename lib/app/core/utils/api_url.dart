@@ -20,6 +20,9 @@ class EndPoint {
   static final String gr = '/good-return';
   static final String ap_inv = '/ap-invoice';
   static final String ap_mem = '/ap-creditmemo';
+  static final String rank_bfmonth = '/rank-bfmonth';
+  static final String rank_thismonth = '/rank-thismonth';
+  static final String rank_ytmonth = '/rank-ytmonth';
 
   // LIST TAB
   static final String masterdata = '/master-data';
