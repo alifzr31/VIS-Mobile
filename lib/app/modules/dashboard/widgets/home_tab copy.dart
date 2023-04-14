@@ -7,22 +7,32 @@ import 'package:intl/intl.dart';
 import 'package:vis_mobile/app/modules/dashboard/controllers/ranking_controller.dart';
 import 'package:vis_mobile/app/modules/dashboard/controllers/report_controller.dart';
 import 'package:vis_mobile/app/modules/dashboard/controllers/user_controller.dart';
-import 'package:vis_mobile/app/modules/dashboard/widgets/home_tab%20copy.dart';
 import 'package:vis_mobile/app/widgets/base_datatable.dart';
+import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:vis_mobile/app/widgets/base_datetimepicker.dart';
 import 'package:vis_mobile/app/widgets/base_refresh.dart';
 
-class HomeTab extends StatefulWidget {
-  const HomeTab({super.key});
+class HomeTab3 extends StatefulWidget {
+  const HomeTab3({super.key});
 
   @override
-  State<HomeTab> createState() => _HomeTabState();
+  State<HomeTab3> createState() => _HomeTab3State();
 }
 
-class _HomeTabState extends State<HomeTab> {
+class _HomeTab3State extends State<HomeTab3>
+    with SingleTickerProviderStateMixin {
   final ctrl_user = Get.find<UserController>();
   final ctrl_rank = Get.find<RankingController>();
   final ctrl_report = Get.find<ReportController>();
+
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    _tabController = TabController(length: 4, vsync: this);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,23 +51,53 @@ class _HomeTabState extends State<HomeTab> {
             });
           },
           child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
             child: Column(
               children: [
                 ContentBody(),
                 const Divider(),
-                ElevatedButton(
-                  onPressed: () {
-                    Get.to(HomeTab3());
-                  },
-                  child: const Text('data'),
+                TabBar(
+                  controller: _tabController,
+                  tabs: const [
+                    Tab(text: 'Ranking Before Month'),
+                    Tab(text: 'Ranking This Month'),
+                    Tab(text: 'Month to Date'),
+                    Tab(text: 'Years to Date'),
+                  ],
                 ),
-                ListRankingBfMonth(),
-                const Divider(),
-                ListRangkingThisMonth(),
-                const Divider(),
-                ListReport(),
-                const Divider(),
-                ListReportYear(),
+                SizedBox(
+                  height: Get.height * 0.5,
+                  width: Get.width,
+                  child: TabBarView(
+                    controller: _tabController,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: ListRankingBfMonth(),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: ListRangkingThisMonth(),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: ListReport(),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: ListReportYear(),
+                      ),
+                    ],
+                  ),
+                ),
+                // const Divider(),
+                // ListRankingBfMonth(),
+                // const Divider(),
+                // ListRangkingThisMonth(),
+                // const Divider(),
+                // ListReport(),
+                // const Divider(),
+                // ListReportYear(),
               ],
             ),
           ),
