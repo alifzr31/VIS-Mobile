@@ -35,6 +35,27 @@ class ReportController extends GetxController {
     super.onInit();
   }
 
+  @override
+  void onReady() {
+    fetchReport();
+    fetchReportYear();
+    super.onReady();
+  }
+
+  @override
+  void onClose() {
+    reportytdate.close();
+    reportytmonth.close();
+    super.onClose();
+  }
+
+  @override
+  void dispose() {
+    reportytdate.close();
+    reportytmonth.close();
+    super.dispose();
+  }
+
   void fetchReport() async {
     try {
       final response = await reportProvider.fetchReport();
@@ -89,7 +110,8 @@ class ReportController extends GetxController {
         var awal = reportytdate.map((e) => e.col2 as int).toList();
         var akhir = reportytdate.map((e) => e.col3 as int).toList();
 
-        total_awal_year.value = awal.fold(0, (int sum, int element) => sum + element);
+        total_awal_year.value =
+            awal.fold(0, (int sum, int element) => sum + element);
         total_akhir_year.value =
             akhir.fold(0, (int sum, int element) => sum + element);
 

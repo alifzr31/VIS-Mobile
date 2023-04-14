@@ -32,11 +32,11 @@ class _HomeTabState extends State<HomeTab> {
           onRefresh: () async {
             await Future.delayed(const Duration(seconds: 3));
             setState(() {
-              ctrl_user.fetchProfile();
-              ctrl_rank.fetchRankbfMonth();
-              ctrl_rank.fetchRankthisMonth();
-              ctrl_report.fetchReport();
-              ctrl_report.fetchReportYear();
+              ctrl_user.profile.refresh();
+              ctrl_rank.rankingbfmonth.refresh();
+              ctrl_rank.rankingthismonth.refresh();
+              ctrl_report.reportytmonth.refresh();
+              ctrl_report.reportytdate.refresh();
             });
           },
           child: SingleChildScrollView(

@@ -7,20 +7,42 @@ import 'package:vis_mobile/app/modules/details/master_data/controller_master_dat
 import 'package:vis_mobile/app/widgets/base_datatable.dart';
 import 'package:vis_mobile/app/widgets/base_refresh.dart';
 
-class MasterDataTab extends StatelessWidget {
+class MasterDataTab extends StatefulWidget {
   const MasterDataTab({super.key});
+
+  @override
+  State<MasterDataTab> createState() => _MasterDataTabState();
+}
+
+class _MasterDataTabState extends State<MasterDataTab> {
+  final controller = Get.find<MasterDataController>();
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-        child: Column(
-          children: [
-            HeaderContent(),
-            const SizedBox(height: 10),
-            Expanded(child: ListMasterData()),
-          ],
+        child: BaseRefresh(
+          onRefresh: () async {
+            await Future.delayed(const Duration(seconds: 3));
+            setState(() {
+              controller.masterdata.refresh();
+            });
+          },
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: SizedBox(
+              height: Get.height,
+              width: Get.width,
+              child: Column(
+                children: [
+                  HeaderContent(),
+                  const SizedBox(height: 10),
+                  Expanded(child: ListMasterData()),
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );
