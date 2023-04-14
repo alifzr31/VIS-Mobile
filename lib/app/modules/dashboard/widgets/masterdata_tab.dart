@@ -60,7 +60,7 @@ class HeaderContent extends StatelessWidget {
         const Center(
           child: Text(
             'List Item Master Data',
-            style: TextStyle(fontSize: 26),
+            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
           ),
         ),
         Center(

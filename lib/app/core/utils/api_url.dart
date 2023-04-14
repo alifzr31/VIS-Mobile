@@ -29,6 +29,9 @@ class EndPoint {
   static final String masterdata = '/master-data';
   static final String masterdatadetail = '/master-data-detail';
 
+  // REPORT TAB
+  static final String salesout = '/salesout';
+
   // DETAIL PO
   static final String detailpo = '/po-detail';
   static final String detailout = '/po-detail-os';

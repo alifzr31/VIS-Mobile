@@ -1,7 +1,10 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:vis_mobile/app/data/models/report.dart';
+import 'package:vis_mobile/app/data/models/sales_out.dart';
 import 'package:vis_mobile/app/data/providers/report_provider.dart';
 
 class ReportController extends GetxController {
@@ -28,10 +31,17 @@ class ReportController extends GetxController {
   final total_akhir_year = 0.obs;
   var reportytdate = <Report>[].obs;
 
+  final total_row_salesout = 0.obs;
+  final startdate = TextEditingController();
+  final enddate = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+  var salesout = <SalesOut>[].obs;
+
   @override
   void onInit() {
     fetchReport();
     fetchReportYear();
+    fetchSalesOut();
     super.onInit();
   }
 
@@ -39,6 +49,7 @@ class ReportController extends GetxController {
   void onReady() {
     fetchReport();
     fetchReportYear();
+    fetchSalesOut();
     super.onReady();
   }
 
@@ -46,6 +57,7 @@ class ReportController extends GetxController {
   void onClose() {
     reportytdate.close();
     reportytmonth.close();
+    salesout.close();
     super.onClose();
   }
 
@@ -53,6 +65,7 @@ class ReportController extends GetxController {
   void dispose() {
     reportytdate.close();
     reportytmonth.close();
+    salesout.close();
     super.dispose();
   }
 
@@ -120,6 +133,39 @@ class ReportController extends GetxController {
         print('Fail');
       }
     } catch (e) {}
+
+    isLoading.value = false;
+    update();
+  }
+
+  void fetchSalesOut() async {
+    var data = ({
+      'start_date': startdate.text,
+      'end_date': enddate.text,
+    });
+
+    try {
+      final response = await reportProvider.fetchSalesOut(data);
+      final body = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        if (body['total_row'] < 1) {
+          print('Eweuh');
+        } else {
+          print('Aya');
+        }
+        total_row_salesout.value = body['total_row'];
+        salesout.value = body['data'] == null
+            ? []
+            : listSalesOutFromJson(jsonEncode(body['data']));
+
+        update();
+      } else {
+        print('Gagal');
+      }
+    } on IOException {
+      print('Error');
+    }
 
     isLoading.value = false;
     update();

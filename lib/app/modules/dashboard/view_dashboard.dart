@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:vis_mobile/app/modules/dashboard/widgets/home_tab.dart';
 import 'package:vis_mobile/app/modules/dashboard/widgets/masterdata_tab.dart';
 import 'package:vis_mobile/app/modules/dashboard/widgets/profile_tab.dart';
+import 'package:vis_mobile/app/modules/dashboard/widgets/report_tab.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -32,6 +33,7 @@ class _DashboardPageState extends State<DashboardPage> {
         items: [
           NavItem(icon: Icons.home),
           NavItem(icon: Icons.list),
+          NavItem(icon: Icons.library_books),
           NavItem(icon: Icons.person),
         ],
         index: _page,
@@ -46,6 +48,7 @@ class _DashboardPageState extends State<DashboardPage> {
         children: [
           const HomeTab(),
           const MasterDataTab(),
+          const ReportTab(),
           const ProfileTab(),
         ],
       ),

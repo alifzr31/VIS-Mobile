@@ -5,6 +5,7 @@ import 'package:vis_mobile/app/core/utils/api_url.dart';
 class ReportProvider {
   final url = Uri.parse(ApiUrl.baseUrl + EndPoint.rank_ytmonth);
   final urlYear = Uri.parse(ApiUrl.baseUrl + EndPoint.rank_ytdate);
+  final urlsalesout = Uri.parse(ApiUrl.baseUrl + EndPoint.salesout);
   var token;
 
   _getToken() async {
@@ -30,6 +31,15 @@ class ReportProvider {
     return http.get(
       urlYear,
       headers: _setHeaders(),
+    );
+  }
+
+  Future<http.Response> fetchSalesOut(Map data) async {
+    await _getToken();
+    return http.post(
+      urlsalesout,
+      headers: _setHeaders(),
+      body: data,
     );
   }
 }
