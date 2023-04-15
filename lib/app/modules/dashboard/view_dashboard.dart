@@ -19,11 +19,6 @@ class _DashboardPageState extends State<DashboardPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        toolbarHeight: 0,
-        backgroundColor: Colors.transparent,
-      ),
       bottomNavigationBar: CurvedNavigationBar(
         key: bottomNavKey,
         color: Colors.black,
