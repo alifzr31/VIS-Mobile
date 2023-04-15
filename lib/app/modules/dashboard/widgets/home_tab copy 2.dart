@@ -8,31 +8,20 @@ import 'package:vis_mobile/app/modules/dashboard/controllers/ranking_controller.
 import 'package:vis_mobile/app/modules/dashboard/controllers/report_controller.dart';
 import 'package:vis_mobile/app/modules/dashboard/controllers/user_controller.dart';
 import 'package:vis_mobile/app/widgets/base_datatable.dart';
-import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:vis_mobile/app/widgets/base_datetimepicker.dart';
 import 'package:vis_mobile/app/widgets/base_refresh.dart';
 
-class HomeTab3 extends StatefulWidget {
-  const HomeTab3({super.key});
+class HomeTab2 extends StatefulWidget {
+  const HomeTab2({super.key});
 
   @override
-  State<HomeTab3> createState() => _HomeTab3State();
+  State<HomeTab2> createState() => _HomeTab2State();
 }
 
-class _HomeTab3State extends State<HomeTab3>
-    with SingleTickerProviderStateMixin {
+class _HomeTab2State extends State<HomeTab2> {
   final ctrl_user = Get.find<UserController>();
   final ctrl_rank = Get.find<RankingController>();
   final ctrl_report = Get.find<ReportController>();
-
-  late TabController _tabController;
-
-  @override
-  void initState() {
-    _tabController = TabController(length: 4, vsync: this);
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,53 +40,17 @@ class _HomeTab3State extends State<HomeTab3>
             });
           },
           child: SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(),
             child: Column(
               children: [
                 ContentBody(),
                 const Divider(),
-                TabBar(
-                  controller: _tabController,
-                  tabs: const [
-                    Tab(text: 'Ranking Before Month'),
-                    Tab(text: 'Ranking This Month'),
-                    Tab(text: 'Month to Date'),
-                    Tab(text: 'Years to Date'),
-                  ],
-                ),
-                SizedBox(
-                  height: Get.height * 0.5,
-                  width: Get.width,
-                  child: TabBarView(
-                    controller: _tabController,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: ListRankingBfMonth(),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: ListRangkingThisMonth(),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: ListReport(),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: ListReportYear(),
-                      ),
-                    ],
-                  ),
-                ),
-                // const Divider(),
-                // ListRankingBfMonth(),
-                // const Divider(),
-                // ListRangkingThisMonth(),
-                // const Divider(),
-                // ListReport(),
-                // const Divider(),
-                // ListReportYear(),
+                ListRankingBfMonth(),
+                const Divider(),
+                ListRangkingThisMonth(),
+                const Divider(),
+                ListReport(),
+                const Divider(),
+                ListReportYear(),
               ],
             ),
           ),
@@ -277,14 +230,6 @@ class ListRankingBfMonth extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // var mo = '2023-${controller.prev_month.value}-01 00:00:00.000';
-    // var m = DateFormat('M').parse(mo);
-    // var format = DateFormat('MMMM');
-    // final month = format.format(m);
-    // print(m);
-    // var formatmonth = DateFormat('MMMM');
-    // final month = formatmonth.format(m);
-
     return Obx(
       () => controller.isLoading.value
           ? const Center(child: CupertinoActivityIndicator())
@@ -300,7 +245,7 @@ class ListRankingBfMonth extends StatelessWidget {
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        controller.prev_month.toString() +
+                        controller.prev_month.value +
                             ' - ' +
                             controller.this_year.toString(),
                         style: const TextStyle(fontWeight: FontWeight.bold),
@@ -325,8 +270,6 @@ class ListRankingBfMonth extends StatelessWidget {
                                   leading: Text(element.ranking.toString()),
                                   title: Text(element.vendor!,
                                       style: const TextStyle(fontSize: 14)),
-                                  trailing: Text(element.brand!,
-                                      style: const TextStyle(fontSize: 12)),
                                 ),
                               ),
                             )
@@ -360,7 +303,7 @@ class ListRangkingThisMonth extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  controller.this_month.toString() +
+                  controller.this_month.value +
                       ' - ' +
                       controller.this_year.toString(),
                   style: const TextStyle(fontWeight: FontWeight.bold),
@@ -385,9 +328,6 @@ class ListRangkingThisMonth extends StatelessWidget {
                             leading: Text(element.ranking.toString()),
                             title: Text(element.vendor!,
                                 style: const TextStyle(fontSize: 14)),
-                            // subtitle: Text(element.brand!),
-                            trailing: Text(element.brand!,
-                                style: const TextStyle(fontSize: 12)),
                           ),
                         ),
                       )
@@ -603,14 +543,14 @@ class ListReportYear extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Total ${controller.start_awal} - ${controller.end_awal} :',
+                          'Total ${controller.start_awal_year} - ${controller.end_awal} :',
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                         const Divider(height: 3),
                         Text(total_awal),
                         const Divider(height: 5),
                         Text(
-                          'Total ${controller.start_akhir} - ${controller.end_akhir} :',
+                          'Total ${controller.start_akhir_year} - ${controller.end_akhir} :',
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                         const Divider(height: 3),
