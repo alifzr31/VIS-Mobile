@@ -79,7 +79,7 @@ class ReportController extends GetxController {
         start_awal.value = body['start_awal'];
         end_awal.value = body['end_awal'];
         start_akhir.value = body['start_akhir'];
-        end_akhir.value = body['start_akhir'];
+        end_akhir.value = body['end_akhir'];
 
         reportytmonth.value = body['data'] == null
             ? []
@@ -114,7 +114,7 @@ class ReportController extends GetxController {
         start_awal_year.value = body['start_awal'];
         end_awal_year.value = body['end_awal'];
         start_akhir_year.value = body['start_akhir'];
-        end_akhir_year.value = body['start_akhir'];
+        end_akhir_year.value = body['end_akhir'];
 
         reportytdate.value = body['data'] == null
             ? []

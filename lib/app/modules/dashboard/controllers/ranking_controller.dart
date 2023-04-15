@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:vis_mobile/app/core/value/colors.dart';
 import 'package:vis_mobile/app/data/models/ranking_month.dart';
 import 'package:vis_mobile/app/data/providers/ranking_provider.dart';
@@ -14,11 +15,11 @@ class RankingController extends GetxController {
 
   var isLoading = true.obs;
   final total_row = 0.obs;
-  var prev_month = 0.obs;
+  var prev_month = ''.obs;
   var this_year = 0.obs;
   var rankingbfmonth = <RankingMonth>[].obs;
   final total_row_thismonth = 0.obs;
-  var this_month = 0.obs;
+  var this_month = ''.obs;
   var this_year2 = 0.obs;
   var rankingthismonth = <RankingMonth>[].obs;
 
@@ -36,7 +37,12 @@ class RankingController extends GetxController {
 
       if (response.statusCode == 200) {
         total_row.value = body['total_row'];
-        prev_month.value = body['prev_month'];
+        
+        var mo = body['prev_month'];
+        var m = DateFormat('M').parse('$mo');
+        var format = DateFormat('MMMM');
+        prev_month.value = format.format(m);
+        
         this_year.value = body['this_year'];
 
         rankingbfmonth.value = body['data'] == null
@@ -74,7 +80,12 @@ class RankingController extends GetxController {
 
       if (response.statusCode == 200) {
         total_row_thismonth.value = body['total_row'];
-        this_month.value = body['this_month'];
+
+        var mo = body['this_month'];
+        var m = DateFormat('M').parse('$mo');
+        var format = DateFormat('MMMM');
+        this_month.value = format.format(m);
+
         this_year2.value = body['this_year'];
 
         rankingthismonth.value = body['data'] == null

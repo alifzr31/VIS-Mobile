@@ -237,14 +237,6 @@ class ListRankingBfMonth extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // var mo = '2023-${controller.prev_month.value}-01 00:00:00.000';
-    // var m = DateFormat('M').parse(mo);
-    // var format = DateFormat('MMMM');
-    // final month = format.format(m);
-    // print(m);
-    // var formatmonth = DateFormat('MMMM');
-    // final month = formatmonth.format(m);
-
     return Obx(
       () => controller.isLoading.value
           ? const Center(child: CupertinoActivityIndicator())
@@ -260,7 +252,7 @@ class ListRankingBfMonth extends StatelessWidget {
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        controller.prev_month.toString() +
+                        controller.prev_month.value +
                             ' - ' +
                             controller.this_year.toString(),
                         style: const TextStyle(fontWeight: FontWeight.bold),
@@ -285,9 +277,6 @@ class ListRankingBfMonth extends StatelessWidget {
                                   leading: Text(element.ranking.toString()),
                                   title: Text(element.vendor!,
                                       style: const TextStyle(fontSize: 14)),
-                                  // subtitle: Text(element.brand!),
-                                  trailing: Text(element.brand!,
-                                      style: const TextStyle(fontSize: 12)),
                                 ),
                               ),
                             )
@@ -321,7 +310,7 @@ class ListRangkingThisMonth extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  controller.this_month.toString() +
+                  controller.this_month.value +
                       ' - ' +
                       controller.this_year.toString(),
                   style: const TextStyle(fontWeight: FontWeight.bold),
@@ -346,9 +335,6 @@ class ListRangkingThisMonth extends StatelessWidget {
                             leading: Text(element.ranking.toString()),
                             title: Text(element.vendor!,
                                 style: const TextStyle(fontSize: 14)),
-                            // subtitle: Text(element.brand!),
-                            trailing: Text(element.brand!,
-                                style: const TextStyle(fontSize: 12)),
                           ),
                         ),
                       )
