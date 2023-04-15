@@ -1,3 +1,4 @@
+import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,7 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:vis_mobile/app/modules/dashboard/controllers/ranking_controller.dart';
 import 'package:vis_mobile/app/modules/dashboard/controllers/report_controller.dart';
 import 'package:vis_mobile/app/modules/dashboard/controllers/user_controller.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
+// import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:vis_mobile/app/widgets/base_refresh.dart';
 
 class HomeTab extends StatefulWidget {
