@@ -89,7 +89,7 @@ class ListDetailPO extends StatelessWidget {
                         style: const TextStyle(fontSize: 12),
                       ),
                       Text(
-                        'Store : ' + controller.total.toString(),
+                        'Total : ' + controller.total.toString(),
                         style: const TextStyle(fontSize: 12),
                       ),
                     ],
