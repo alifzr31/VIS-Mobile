@@ -68,6 +68,10 @@ class ListDetailPO extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
+                        'Store : ' + controller.detailpo[index].store!,
+                        style: const TextStyle(fontSize: 12),
+                      ),
+                      Text(
                         'Item Code : ' + controller.detailpo[index].itemcode!,
                         style: const TextStyle(fontSize: 12),
                       ),
@@ -81,15 +85,11 @@ class ListDetailPO extends StatelessWidget {
                         style: const TextStyle(fontSize: 12),
                       ),
                       Text(
-                        'Store : ' + controller.detailpo[index].store!,
-                        style: const TextStyle(fontSize: 12),
-                      ),
-                      Text(
                         'Gross Price : ' + controller.g_price.toString(),
                         style: const TextStyle(fontSize: 12),
                       ),
                       Text(
-                        'Total : ' + controller.total.toString(),
+                        'Total Gross Price : ' + controller.total.toString(),
                         style: const TextStyle(fontSize: 12),
                       ),
                     ],
