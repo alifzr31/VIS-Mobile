@@ -39,14 +39,18 @@ class _HomeTabState extends State<HomeTab> with TickerProviderStateMixin {
         padding: const EdgeInsets.all(20),
         child: BaseRefresh(
           onRefresh: () async {
-            await Future.delayed(const Duration(seconds: 3));
-            setState(() {
-              ctrl_user.profile.refresh();
-              ctrl_rank.rankingbfmonth.refresh();
-              ctrl_rank.rankingthismonth.refresh();
-              ctrl_report.reportytmonth.refresh();
-              ctrl_report.reportytdate.refresh();
-            });
+            await Future.delayed(
+              const Duration(seconds: 2),
+              () async {
+                setState(() {
+                  ctrl_user.profile.refresh();
+                  ctrl_rank.rankingbfmonth.refresh();
+                  ctrl_rank.rankingthismonth.refresh();
+                  ctrl_report.reportytmonth.refresh();
+                  ctrl_report.reportytdate.refresh();
+                });
+              },
+            );
           },
           child: SingleChildScrollView(
             child: Column(
