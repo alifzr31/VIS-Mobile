@@ -10,13 +10,15 @@ import 'package:vis_mobile/app/core/utils/my_http_overrides.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = MyHttpOverrides();
+  
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.dark,
+      statusBarColor: Colors.black,
+      // statusBarIconBrightness: Brightness.dark,
       systemNavigationBarColor: Colors.black,
     ),
   );
+  
   runApp(const MyApp());
   configLoading();
 }
