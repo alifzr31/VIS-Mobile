@@ -13,12 +13,13 @@ void main() async {
   
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
-      statusBarColor: Colors.black,
-      // statusBarIconBrightness: Brightness.dark,
+      statusBarColor: Colors.transparent,
+      statusBarBrightness: Brightness.light,
+      statusBarIconBrightness: Brightness.dark,
       systemNavigationBarColor: Colors.black,
     ),
   );
-  
+
   runApp(const MyApp());
   configLoading();
 }
@@ -34,18 +35,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // SystemChrome.setSystemUIOverlayStyle(
-    //   SystemUiOverlayStyle(
-    //     statusBarColor: Colors.transparent,
-    //   ),
-    // );
-
     return GetMaterialApp(
       title: 'VIS Mobile',
       theme: ThemeData(
         brightness: Brightness.light,
         primarySwatch: Colors.grey,
         fontFamily: 'Verdana',
+        appBarTheme: const AppBarTheme(
+          systemOverlayStyle: SystemUiOverlayStyle.dark,
+        )
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
