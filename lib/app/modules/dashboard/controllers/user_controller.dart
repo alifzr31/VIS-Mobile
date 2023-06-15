@@ -8,6 +8,7 @@ import 'package:vis_mobile/app/core/value/colors.dart';
 import 'package:vis_mobile/app/data/models/dash.dart';
 import 'package:vis_mobile/app/data/models/user.dart';
 import 'package:vis_mobile/app/data/providers/user_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserController extends GetxController {
   final UserProvider userProvider;
@@ -106,6 +107,18 @@ class UserController extends GetxController {
         ).format(tApi);
 
         update();
+      } else if (response.statusCode == 403) {
+        SharedPreferences _prefs = await SharedPreferences.getInstance();
+        Get.offAllNamed('/login');
+        _prefs.clear();
+
+        Get.snackbar(
+          "You've been logged out",
+          'Your session is expired. Please to log in again',
+          backgroundColor: Colors.blue.withOpacity(0.8),
+          colorText: Colors.white,
+          icon: const Icon(Icons.info, color: Colors.white),
+        );
       } else {
         Get.snackbar(
           'Failed',

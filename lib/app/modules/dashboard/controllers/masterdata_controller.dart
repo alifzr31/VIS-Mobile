@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vis_mobile/app/core/value/colors.dart';
 import 'package:vis_mobile/app/data/models/master_data.dart';
 import 'package:vis_mobile/app/data/providers/master_provider.dart';
@@ -38,15 +39,28 @@ class MasterDataController extends GetxController {
             : listMasterDataFromJson(jsonEncode(body['data']));
 
         update();
-      } else {
-        Get.snackbar(
-          'Failed',
-          response.statusCode.toString(),
-          backgroundColor: Colors.amber.withOpacity(0.8),
-          colorText: blueColor,
-          icon: const Icon(Icons.warning, color: blueColor),
-        );
-      }
+      } 
+      // else if (response.statusCode == 403) {
+      //   SharedPreferences _prefs = await SharedPreferences.getInstance();
+      //   Get.offAllNamed('/login');
+      //   _prefs.clear();
+
+      //   Get.snackbar(
+      //     "You've been logged out",
+      //     'Your session is expired. Please to log in again',
+      //     backgroundColor: Colors.blue.withOpacity(0.8),
+      //     colorText: Colors.white,
+      //     icon: const Icon(Icons.info, color: Colors.white),
+      //   );
+      // } else {
+      //   Get.snackbar(
+      //     'Failed',
+      //     'Fetching data failed',
+      //     backgroundColor: Colors.amber.withOpacity(0.8),
+      //     colorText: blueColor,
+      //     icon: const Icon(Icons.warning, color: blueColor),
+      //   );
+      // }
     } on IOException {
       Get.snackbar(
         'Failed',
